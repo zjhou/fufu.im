@@ -1,0 +1,25 @@
+@import "../../../../scss/main";
+article {
+  font-size: 7pt;
+  margin-bottom: 20pt;
+  padding-bottom: 15pt;
+  color: $text-color;
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 30pt;
+    border-top: solid 1pt $theme-color;
+    position: relative;
+    top: 15pt
+  }
+  header {
+    margin-bottom: 15pt;
+  }
+
+  img {max-width: 100%}
+  
+  pre, .markdown-body {
+    font-family: "Microsoft YaHei", serif;
+    line-height: 2;
+  }
+}

@@ -1,0 +1,34 @@
+@import "../../../../scss/main";
+.blog {
+  margin-top: 79pt;
+  font-family: Microsoft Yahei, serif;
+  .blog-title {
+    font-size: 15pt;
+  }
+
+  > header {
+    position: sticky;
+    top: 79pt;
+  }
+  section[data-loading] {
+    position: relative;
+    top: 0;
+    opacity: 1;
+    transition: all .2s;
+    padding-bottom: 10pt;
+
+    &[data-loading="true"]{
+      top: 3pt;
+      opacity: 0;
+
+      & + .page-nav {
+        opacity: 0;
+      }
+    }
+  }
+
+  .email { font-size: 7pt}
+  main {
+    margin-top: 42pt;
+  }
+}

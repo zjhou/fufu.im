@@ -1,0 +1,55 @@
+@import "../../../../scss/main";
+.nav {
+  margin: 0;
+  padding: 0;
+  width: 50%;
+  position: sticky;
+  top: 153pt;
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 10pt;
+    border-top: solid 1pt $text-color;
+  }
+  .nav-item {
+    position: relative;
+    list-style: none;
+    height: 40pt;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 10pt;
+      border-top: solid 1pt $text-color;
+    }
+
+    img {width: 12pt}
+    .icon-wrap {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .nav-item-text {
+      position: relative;
+      top: 3pt;
+      font-size: 7pt;
+      opacity: 0;
+      transition: all .2s;
+      margin-left: 13pt;
+      color: $text-color;
+    }
+
+    &[data-status="selected"]  .nav-item-text {
+      top: -3pt;
+      opacity: 1;
+      color: $theme-color
+    }
+
+    &[data-status="hover"]  .nav-item-text {
+      top: -3pt;
+      opacity: 1;
+    }
+  }
+}
