@@ -11,10 +11,6 @@
     top: 79pt;
   }
 
-  // hack, fix nav shake problem
-  > main > div > div:nth-child(2){border: solid 1px transparent}
-  // -----------------------------------------------------------
-
   section[data-loading] {
     position: relative;
     top: 0;
