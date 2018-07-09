@@ -24,11 +24,20 @@
       border-top: solid 1pt $text-color;
     }
 
-    img {width: 12pt}
     .icon-wrap {
       position: relative;
       top: 50%;
       transform: translateY(-50%);
+      overflow: hidden;
+      > span {
+        &:first-child {
+          width: 12pt;
+          height: 12pt;
+          > img {width: 100%}
+        }
+
+        float: left
+      }
     }
 
     .nav-item-text {
@@ -42,13 +51,13 @@
     }
 
     &[data-status="selected"]  .nav-item-text {
-      top: -3pt;
+      top: 0;
       opacity: 1;
       color: $theme-color
     }
 
     &[data-status="hover"]  .nav-item-text {
-      top: -3pt;
+      top: 0;
       opacity: 1;
     }
   }
