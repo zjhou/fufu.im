@@ -58,7 +58,7 @@ Post.translate = async function (prismicResult) {
         post.title = prismicResult.data.title || '';
     }
     if(prismicResult.data.date){
-        post.date = dateFormatter(prismicResult.last_publication_date);
+        post.date = dateFormatter(prismicResult.data.date);
     }
     post.content = await contentFormatter(prismicResult);
     return post;
