@@ -2,13 +2,19 @@
 .blog {
   margin-top: 79pt;
   font-family: Microsoft Yahei, serif;
-  .blog-title {
-    font-size: 15pt;
-  }
-
   > header {
     position: sticky;
     top: 79pt;
+  }
+  .blog-header {
+    > div:last-child {
+      padding: 9pt 0;
+    }
+  }
+  .blog-title {
+    font-size: 15pt;
+    border-bottom: 1pt solid #ffba26;
+    padding: 4pt 0;
   }
 
   section[data-loading] {
@@ -28,7 +34,9 @@
     }
   }
 
-  .email { font-size: 7pt}
+  .email {
+    font-size: 7pt;
+  }
   main {
     margin-top: 42pt;
   }

@@ -14,14 +14,18 @@ import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
 const Head =
     (props) => {
         return (
-            <React.Fragment>
-                <span className="blog-title high-light">
-                    {props.title}
-                </span><br/>
-                <span className="email high-light">
-                    {props.email}
-                </span>
-            </React.Fragment>
+            <div className="blog-header">
+                <div>
+                    <span className="blog-title high-light">
+                        {props.title}
+                    </span>
+                </div>
+                <div>
+                    <span className="email high-light">
+                        {props.email}
+                    </span>
+                </div>
+            </div>
         );
     };
 
@@ -96,12 +100,13 @@ export default class Blog extends React.Component {
             this.loadPosts(this.state.activePostsType, this.state.pagenow)
                 .catch(e => {
                     console.error(e);
+                    this.setState({loadingPosts: false});
                 });
         }
     }
 
     render() {
-        if(this.state.hasException){
+        if (this.state.hasException) {
             return <ErrorPanel/>;
         }
         if (this.state.loading) {
@@ -109,59 +114,57 @@ export default class Blog extends React.Component {
         }
 
         return (
-            <ErrorBoundary>
-                <div className="blog">
-                    <header>
-                        <Flex>
-                            <Box width={100 / 960}/>
-                            <Box width={860 / 960}>
-                                <Head {...this.state.blogConfig}/>
-                            </Box>
-                        </Flex>
-                    </header>
-                    <main>
-                        <Flex>
-                            <Box width={100 / 960}>
-                                <DaysFrom start="2017-11-18"/>
-                            </Box>
-                            <Box width={314 / 960}>
-                                <Nav
-                                    navItems={this.state.navItems}
-                                    disabled={this.state.loadingPosts || this.state.loading}
-                                    activeType={this.state.activePostsType}
-                                    onChange={(type) => {
-                                        this.setState({
-                                            activePostsType: type,
-                                            pagenow: 1
-                                        });
-                                    }}
-                                />
-                            </Box>
-                            <Box width={280 / 960}>
-                                <section data-loading={this.state.loadingPosts}>
-                                    {
-                                        !this.state.loadingPosts &&
-                                        this.state.posts &&
-                                        this.state.posts.list.map((post, index) =>
-                                            <Post {...post} key={index}/>
-                                        )
-                                    }
-                                </section>
-                                {(this.state.posts.prevPage || this.state.posts.nextPage) &&
-                                <PageNav
-                                    {...this.state.posts}
-                                    onClick={async (pagenow) => {
-                                        await this.loadPosts(this.state.activePostsType, pagenow);
-                                        this.setState({pagenow: pagenow});
-                                    }}
-                                />
+            <div className="blog">
+                <header>
+                    <Flex>
+                        <Box width={100 / 960}/>
+                        <Box width={860 / 960}>
+                            <Head {...this.state.blogConfig}/>
+                        </Box>
+                    </Flex>
+                </header>
+                <main>
+                    <Flex>
+                        <Box width={100 / 960}>
+                            <DaysFrom start="2017-11-18"/>
+                        </Box>
+                        <Box width={314 / 960}>
+                            <Nav
+                                navItems={this.state.navItems}
+                                disabled={this.state.loadingPosts || this.state.loading}
+                                activeType={this.state.activePostsType}
+                                onChange={(type) => {
+                                    this.setState({
+                                        activePostsType: type,
+                                        pagenow: 1
+                                    });
+                                }}
+                            />
+                        </Box>
+                        <Box width={280 / 960}>
+                            <section data-loading={this.state.loadingPosts}>
+                                {
+                                    !this.state.loadingPosts &&
+                                    this.state.posts &&
+                                    this.state.posts.list.map((post, index) =>
+                                        <Post {...post} key={index}/>
+                                    )
                                 }
-                            </Box>
-                            <Box width={276 / 960}/>
-                        </Flex>
-                    </main>
-                </div>
-            </ErrorBoundary>
+                            </section>
+                            {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                            <PageNav
+                                {...this.state.posts}
+                                onClick={async (pagenow) => {
+                                    await this.loadPosts(this.state.activePostsType, pagenow);
+                                    this.setState({pagenow: pagenow});
+                                }}
+                            />
+                            }
+                        </Box>
+                        <Box width={276 / 960}/>
+                    </Flex>
+                </main>
+            </div>
         );
     }
 }
