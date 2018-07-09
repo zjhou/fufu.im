@@ -13,7 +13,6 @@ class NavItem extends React.Component {
     }
 
     onItemClick() {
-        this.setState({status: 'selected'});
         this.props.onClick && this.props.onClick(this.props.text);
     }
 
@@ -82,12 +81,15 @@ class Nav extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.activeIdx !== this.state.activeIdx ||
-            nextProps.navItems.length !== this.props.navItems.length;
+        return nextState.activeIdx !== this.state.activeIdx
+            || nextProps.disabled !== this.props.disabled
+            || nextProps.navItems.length !== this.props.navItems.length;
     }
 
-    componentDidUpdate() {
-        this.props.onChange && this.props.onChange(this.state.activeType);
+    componentDidUpdate(prevProps, prevState) {
+        if(!this.props.disabled && prevState.activeType !== this.state.activeType){
+            this.props.onChange && this.props.onChange(this.state.activeType);
+        }
     }
 
     render() {
@@ -101,6 +103,7 @@ class Nav extends React.Component {
                             {...navItem}
                             status={navItem.text === this.state.activeType? 'selected' : 'normal'}
                             onClick={(text) => {
+                                if(this.props.disabled) return;
                                 this.setState({
                                     activeIdx: index,
                                     activeType: text
@@ -117,7 +120,8 @@ class Nav extends React.Component {
 Nav.propTypes = {
     navItems: PropTypes.arrayOf(PropTypes.shape(NavItem.propTypes)),
     activeType: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    disabled: PropTypes.bool
 };
 
 export default Nav;
