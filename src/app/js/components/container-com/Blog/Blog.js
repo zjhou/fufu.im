@@ -40,20 +40,12 @@ export default class Blog extends React.Component {
             pagenow: 1,
         };
         this.loadPosts = this.loadPosts.bind(this);
+        this.loadBlogAssets = this.loadBlogAssets.bind(this);
     }
 
     async componentDidMount() {
-        let blogConfig = await getBlogConfig();
-        let navItems = await getNavItems();
-        let posts = await getPosts(blogConfig.defaultType, this.state.pagenow);
-        this.setState({
-            blogConfig: blogConfig,
-            activePostsType: blogConfig.defaultType,
-            navItems: navItems,
-            posts: posts,
-            loading: false,
-            loadingPosts: false
-        });
+        await this.loadBlogAssets();
+        await this.loadPosts(this.state.activePostsType, this.state.pagenow);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -65,6 +57,18 @@ export default class Blog extends React.Component {
             || (nextProps !== this.props)
             || (nextState.activePostsType !== this.state.activePostsType)
             || (nextState.posts !== this.state.posts);
+    }
+
+    async loadBlogAssets() {
+        let blogConfig = await getBlogConfig();
+        let navItems = await getNavItems();
+        this.setState({
+            blogConfig: blogConfig,
+            activePostsType: blogConfig.defaultType,
+            navItems: navItems,
+            loading: false,
+        });
+
     }
 
     async loadPosts(type, pagenow) {
@@ -105,6 +109,7 @@ export default class Blog extends React.Component {
                             <Box width={314 / 960}>
                                 <Nav
                                     navItems={this.state.navItems}
+                                    disabled={this.state.loadingPosts || this.state.loading}
                                     activeType={this.state.activePostsType}
                                     onChange={(type) => {
                                         this.setState({
@@ -116,9 +121,13 @@ export default class Blog extends React.Component {
                             </Box>
                             <Box width={280 / 960}>
                                 <section data-loading={this.state.loadingPosts}>
-                                    {this.state.posts.list.map((post, index) =>
-                                        <Post {...post} key={index}/>
-                                    )}
+                                    {
+                                        !this.state.loadingPosts &&
+                                        this.state.posts &&
+                                        this.state.posts.list.map((post, index) =>
+                                            <Post {...post} key={index}/>
+                                        )
+                                    }
                                 </section>
                                 {(this.state.posts.prevPage || this.state.posts.nextPage) &&
                                 <PageNav
