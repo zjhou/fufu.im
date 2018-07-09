@@ -17,7 +17,11 @@ article {
   }
 
   img {max-width: 100%}
-  
+
+  .markdown-body > img {
+    margin-bottom: 5pt;
+  }
+
   pre, .markdown-body {
     font-family: "Microsoft YaHei", serif;
     line-height: 2;
