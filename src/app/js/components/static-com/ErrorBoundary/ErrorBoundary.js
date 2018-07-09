@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ErrorPanel from './ErrorPanel';
 
 export default class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ export default class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return this.props.ErrorPanel || 'ERROR';
+            return this.props.ErrorPanel || <ErrorPanel />;
         }
         return this.props.children;
     }
