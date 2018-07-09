@@ -7,7 +7,6 @@ import {getBlogConfig, getNavItems, getPosts} from '../../../service/BlogApi';
 import Post from '../../static-com/Post/Post';
 import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
-import ErrorBoundary from '../../static-com/ErrorBoundary/ErrorBoundary';
 import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
 import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
 
