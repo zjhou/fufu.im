@@ -8,6 +8,7 @@ import Post from '../../static-com/Post/Post';
 import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
 import ErrorBoundary from '../../static-com/ErrorBoundary/ErrorBoundary';
+import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
 
 const Head =
     (props) => {
@@ -37,15 +38,22 @@ export default class Blog extends React.Component {
             navItems: [],
             activePostsType: props.activePostsType || '',
             posts: {},
+            hasException: false,
             pagenow: 1,
         };
         this.loadPosts = this.loadPosts.bind(this);
         this.loadBlogAssets = this.loadBlogAssets.bind(this);
     }
 
-    async componentDidMount() {
-        await this.loadBlogAssets();
-        await this.loadPosts(this.state.activePostsType, this.state.pagenow);
+    componentDidMount() {
+        this.loadBlogAssets()
+            .then(() => {
+                return this.loadPosts(this.state.activePostsType, this.state.pagenow);
+            })
+            .catch((e) => {
+                console.error(e);
+                this.setState({hasException: true});
+            });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -53,6 +61,7 @@ export default class Blog extends React.Component {
             || (nextState.loading !== this.state.loading)
             || (nextState.loadingPosts !== this.state.loadingPosts)
             || (nextState.pagenow !== this.state.pagenow)
+            || (nextState.hasException !== this.state.hasException)
             || (nextState.navItems !== this.state.navItems)
             || (nextProps !== this.props)
             || (nextState.activePostsType !== this.state.activePostsType)
@@ -68,7 +77,6 @@ export default class Blog extends React.Component {
             navItems: navItems,
             loading: false,
         });
-
     }
 
     async loadPosts(type, pagenow) {
@@ -80,18 +88,25 @@ export default class Blog extends React.Component {
         });
     }
 
-    async componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.state.activePostsType !== prevState.activePostsType ||
             prevProps.activePostsType !== this.props.activePostsType
         ) {
-            await this.loadPosts(this.state.activePostsType, this.state.pagenow);
+            this.loadPosts(this.state.activePostsType, this.state.pagenow)
+                .catch(e => {
+                    console.error(e);
+                });
         }
     }
 
     render() {
+        if(this.state.hasException){
+            return <ErrorPanel/>;
+        }
         if (this.state.loading) {
             return <Spinner/>;
         }
+
         return (
             <ErrorBoundary>
                 <div className="blog">
