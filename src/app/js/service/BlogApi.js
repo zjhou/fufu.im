@@ -44,7 +44,8 @@ const getNavItems = async () => {
         }),
         NavItem.translate,
     );
-    return await resolvePromise(results.list);
+    let items = await resolvePromise(results.list);
+    return items.sort((a, b) => a.order > b.order);
 };
 
 const getPosts = async (type, pagenow) => {

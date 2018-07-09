@@ -27,6 +27,7 @@ function NavItem() {
 NavItem.translate = async function (prismicResult) {
     let navItem = new NavItem();
     navItem.text = prismicResult.data.name;
+    navItem.order = Number(prismicResult.data.order);
     navItem.icon = await getImage(prismicResult.data.icon.url);
     navItem.highlightIcon = await getImage(prismicResult.data['highlight-icon'].url);
     return navItem;
