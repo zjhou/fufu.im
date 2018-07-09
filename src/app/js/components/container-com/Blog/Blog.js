@@ -9,6 +9,7 @@ import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
 import ErrorBoundary from '../../static-com/ErrorBoundary/ErrorBoundary';
 import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
+import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
 
 const Head =
     (props) => {
@@ -120,7 +121,9 @@ export default class Blog extends React.Component {
                     </header>
                     <main>
                         <Flex>
-                            <Box width={100 / 960}/>
+                            <Box width={100 / 960}>
+                                <DaysFrom start="2017-11-18"/>
+                            </Box>
                             <Box width={314 / 960}>
                                 <Nav
                                     navItems={this.state.navItems}

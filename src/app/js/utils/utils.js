@@ -63,4 +63,9 @@ const getImage = async (url) => {
     });
 };
 
-export {getImage, Get, dateFormatter, resolvePromise};
+const daysFrom = start => {
+    let currentMs = (new Date()).getTime();
+    let startMs= (new Date(start)).getTime();
+    return parseInt((currentMs - startMs) / 1000 / 60 / 60 / 24);
+};
+export {getImage, Get, dateFormatter, resolvePromise, daysFrom};
