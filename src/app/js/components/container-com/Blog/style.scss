@@ -2,11 +2,8 @@
 .blog {
   margin-top: 79pt;
   font-family: Microsoft Yahei, serif;
-  > header {
-    position: sticky;
-    top: 79pt;
-  }
   .blog-header {
+    position: fixed;
     > div:last-child {
       padding: 9pt 0;
     }
@@ -23,6 +20,7 @@
     opacity: 1;
     transition: all .2s;
     padding-bottom: 10pt;
+    padding-top: 92pt;
 
     &[data-loading="true"]{
       top: 3pt;

@@ -85,6 +85,7 @@ export default class Blog extends React.Component {
 
     async loadPosts(type, pagenow) {
         if(!type){return;}
+        scrollTo(0,-1);
         this.setState({loadingPosts: true});
         let posts = await getPosts(type, pagenow);
         this.setState({
@@ -115,55 +116,48 @@ export default class Blog extends React.Component {
 
         return (
             <div className="blog">
-                <header>
-                    <Flex>
-                        <Box width={100 / 960}/>
-                        <Box width={860 / 960}>
+                <Flex>
+                    <Box width={100 / 960}>
+                        <DaysFrom start="2017-11-18"/>
+                    </Box>
+                    <Box width={314 / 960}>
+                        <header>
                             <Head {...this.state.blogConfig}/>
-                        </Box>
-                    </Flex>
-                </header>
-                <main>
-                    <Flex>
-                        <Box width={100 / 960}>
-                            <DaysFrom start="2017-11-18"/>
-                        </Box>
-                        <Box width={314 / 960}>
-                            <Nav
-                                navItems={this.state.navItems}
-                                disabled={this.state.loadingPosts || this.state.loading}
-                                activeType={this.state.activePostsType}
-                                onChange={(type) => {
-                                    this.setState({
-                                        activePostsType: type,
-                                        pagenow: 1
-                                    });
-                                }}
-                            />
-                        </Box>
-                        <Box width={280 / 960}>
-                            <section data-loading={this.state.loadingPosts}>
-                                {
-                                    !this.state.loadingPosts &&
-                                    this.state.posts.list &&
-                                    this.state.posts.list.map((post, index) =>
-                                        <Post {...post} key={index}/>
-                                    )
-                                }
-                            </section>
-                            {(this.state.posts.prevPage || this.state.posts.nextPage) &&
-                            <PageNav
-                                {...this.state.posts}
-                                onClick={async (pagenow) => {
-                                    await this.loadPosts(this.state.activePostsType, pagenow);
-                                    this.setState({pagenow: pagenow});
-                                }}
-                            />
+                        </header>
+                        <Nav
+                            navItems={this.state.navItems}
+                            disabled={this.state.loadingPosts || this.state.loading}
+                            activeType={this.state.activePostsType}
+                            onChange={(type) => {
+                                this.setState({
+                                    activePostsType: type,
+                                    pagenow: 1
+                                });
+                            }}
+                        />
+                    </Box>
+                    <Box width={280 / 960}>
+                        <section data-loading={this.state.loadingPosts}>
+                            {
+                                !this.state.loadingPosts &&
+                                this.state.posts.list &&
+                                this.state.posts.list.map((post, index) =>
+                                    <Post {...post} key={index}/>
+                                )
                             }
-                        </Box>
-                        <Box width={276 / 960}/>
-                    </Flex>
-                </main>
+                        </section>
+                        {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                        <PageNav
+                            {...this.state.posts}
+                            onClick={async (pagenow) => {
+                                await this.loadPosts(this.state.activePostsType, pagenow);
+                                this.setState({pagenow: pagenow});
+                            }}
+                        />
+                        }
+                    </Box>
+                    <Box width={276 / 960}/>
+                </Flex>
             </div>
         );
     }
