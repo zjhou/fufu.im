@@ -3,70 +3,24 @@ import PropTypes from 'prop-types';
 import Image from '../Image';
 import './style.scss';
 
-class NavItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            status: props.status || 'normal' // normal <- -> hover -> selected -> normal
-        };
-        this.onItemClick = this.onItemClick.bind(this);
-    }
-
-    onItemClick() {
-        this.props.onClick && this.props.onClick(this.props.text);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if(prevProps.status !== this.props.status){
-            this.setState({
-                status: this.props.status
-            });
-        }
-        if(prevState.status !== this.state.status){
-            this.setState({
-                status: this.state.status
-            });
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.status !== this.props.status ||
-            nextState.status !== this.state.status;
-    }
-
-    render() {
-        let props = this.props;
-        return (
-            <li className="nav-item noselect"
-                data-status={this.state.status}
-                onClick={this.onItemClick}
-                onMouseEnter={() => {
-                    if (this.state.status !== 'selected') {
-                        this.setState({status: 'hover'});
-                    }
-                }}
-                onMouseLeave={() => {
-                    if (this.state.status !== 'selected') {
-                        this.setState({status: 'normal'});
-                    }
-                }}
-            >
-                <div className="icon-wrap">
-                    <Image src={
-                        this.state.status === 'selected'
-                            ? props.highlightIcon
-                            : props.icon
-                    }/>
-                    <span className="nav-item-text">{props.text.toUpperCase()}</span>
-                </div>
-            </li>
-        );
-    }
-}
+const NavItem = (props) =>
+    <li className="nav-item noselect"
+        data-selected={props.selected}
+        onClick={() => {props.onClick(props.text);}}
+    >
+        <div className="icon-wrap">
+            <Image src={
+                props.selected
+                    ? props.highlightIcon
+                    : props.icon
+            }/>
+            <span className="nav-item-text">{props.text.toUpperCase()}</span>
+        </div>
+    </li>;
 
 NavItem.propTypes = {
     onClick: PropTypes.func,
-    status: PropTypes.string,
+    selected: PropTypes.bool,
     icon: PropTypes.object.isRequired,
     highlightIcon: PropTypes.object.isRequired,
     text: PropTypes.string.isRequired,
@@ -81,8 +35,10 @@ class Nav extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.activeIdx !== this.state.activeIdx
-            || nextProps.disabled !== this.props.disabled
+        return nextProps.disabled !== this.props.disabled
+            || nextState.activeType!== this.state.activeType
+            || nextProps.activeType!== this.props.activeType
+            || nextProps.onChange !== this.props.onChange
             || nextProps.navItems !== this.props.navItems;
     }
 
@@ -101,7 +57,7 @@ class Nav extends React.Component {
                         <NavItem
                             key={index}
                             {...navItem}
-                            status={navItem.text === this.state.activeType? 'selected' : 'normal'}
+                            selected={navItem.text === this.state.activeType}
                             onClick={(text) => {
                                 if(this.props.disabled) return;
                                 this.setState({
