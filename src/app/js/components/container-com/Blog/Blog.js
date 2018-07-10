@@ -37,7 +37,7 @@ export default class Blog extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            loadingPosts: true,
+            loadingPosts: false,
             blogConfig: {},
             navItems: [],
             activePostsType: props.activePostsType || '',
@@ -84,6 +84,7 @@ export default class Blog extends React.Component {
     }
 
     async loadPosts(type, pagenow) {
+        if(!type){return;}
         this.setState({loadingPosts: true});
         let posts = await getPosts(type, pagenow);
         this.setState({
@@ -144,7 +145,7 @@ export default class Blog extends React.Component {
                             <section data-loading={this.state.loadingPosts}>
                                 {
                                     !this.state.loadingPosts &&
-                                    this.state.posts &&
+                                    this.state.posts.list &&
                                     this.state.posts.list.map((post, index) =>
                                         <Post {...post} key={index}/>
                                     )

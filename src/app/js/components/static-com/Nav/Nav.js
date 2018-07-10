@@ -76,7 +76,7 @@ class Nav extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeType: props.activeType || 'cat'
+            activeType: props.activeType,
         };
     }
 
