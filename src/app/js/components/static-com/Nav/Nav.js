@@ -83,7 +83,7 @@ class Nav extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         return nextState.activeIdx !== this.state.activeIdx
             || nextProps.disabled !== this.props.disabled
-            || nextProps.navItems.length !== this.props.navItems.length;
+            || nextProps.navItems !== this.props.navItems;
     }
 
     componentDidUpdate(prevProps, prevState) {
