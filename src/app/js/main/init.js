@@ -8,14 +8,20 @@ export default async function () {
     localforage.setItem('blogConfig', blogConfig);
 
     if(window.Worker && Config.enableWorker){
-        const WORKER = new Worker('./worker.js');
-        WORKER.postMessage({
-            pagesize: blogConfig.pagesize,
-            types: navItems.map(item => item.text)
+        window.WORKER = new Worker('./worker.js');
+        window.WORKER.postMessage({
+            type: 'init',
+            content: {
+                pagesize: blogConfig.pagesize,
+                types: navItems.map(item => item.text)
+            }
         });
-        WORKER.onmessage = function (e) {
+        window.WORKER.onmessage = function (e) {
             let posts = e.data;
-            localforage.setItem(posts.key, posts.value);
+            let hasContent = posts.value.results && posts.value.results.length;
+            if(hasContent){
+                localforage.setItem(posts.key, posts.value);
+            }
         };
     }
 

@@ -29,16 +29,27 @@ const getPosts = (type, pagenow, pagesize) => {
     return Get(URL);
 };
 
-onmessage = async function (e) {
-    let blogInfo = e.data;
-    blogInfo.types.map(type => {
-        getPosts(type, 1, blogInfo.pagesize)((posts) => {
+const getPostsAndSendBack = (type, pagenow, pagesize) => {
+    getPosts(type, pagenow, pagesize)(
+        (posts) => {
             postMessage({
-                key: type + '-' + 1,
+                key: type + '-' + pagenow,
                 value: JSON.parse(posts)
             });
-        })
-    })
+        });
+};
+
+onmessage = async function (e) {
+    let MSG = e.data;
+    switch (MSG.type) {
+        case 'init':
+            MSG.content.types.map(type => {
+                getPostsAndSendBack(type, 1, MSG.content.pagesize);
+            });
+            break;
+        case 'loadNextPage':
+            getPostsAndSendBack(MSG.content.type, MSG.content.pagenow, MSG.content.pagesize)
+    }
 };
 
 

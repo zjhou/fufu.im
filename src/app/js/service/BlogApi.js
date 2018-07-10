@@ -52,20 +52,32 @@ const getNavItems = async () => {
     return items.sort((a, b) => a.order > b.order);
 };
 
+const getPostsWithWorker = async (type, pagenow, pagesize) => {
+    let hasCached = (await localforage.keys()).includes(`${type}-${pagenow}`);
+    if(!window.Worker || !Config.enableWorker || hasCached){ return false;}
+    window.WORKER.postMessage({
+        type: 'loadNextPage',
+        content: {
+            type,
+            pagenow,
+            pagesize
+        }
+    });
+};
 const getPosts = async (type, pagenow) => {
     let cachedConfig = await localforage.getItem('blogConfig');
     let cachedPosts = await localforage.getItem(`${type}-${pagenow}`);
-    console.warn(cachedPosts);
+    let pagesize = (cachedConfig || Config).pagesize;
     let results = cachedPosts
         ? await respFormatter(cachedPosts, Post.translate)
         : await queryAPI(
             api => api.query(Prismic.Predicates.at('document.type', type), {
-                pageSize: (cachedConfig || Config).pagesize,
+                pageSize:pagesize,
                 page: pagenow
             }),
             Post.translate
         );
-
+    await getPostsWithWorker(type, pagenow + 1, pagesize);
     results.list = await resolvePromise(results.list);
     results.pagenow = pagenow;
     return results;
