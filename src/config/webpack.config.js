@@ -1,6 +1,7 @@
 const path = require('path')
     , MiniCssExtractPlugin = require('mini-css-extract-plugin')
     , OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+    , BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     , UglifyJsPlugin = require('uglifyjs-webpack-plugin')
     , eslint_formatter_pretty = require('eslint-formatter-pretty')
     , CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -9,7 +10,6 @@ const path = require('path')
 module.exports = {
     entry: {
         'main': ['babel-polyfill', './app/js/main/index.js'],
-        'main-vendor': ['react', 'react-dom']
     },
     output: {
         path: path.resolve(__dirname, '../dist/assets'),
@@ -70,7 +70,7 @@ module.exports = {
             new OptimizeCssAssetsPlugin({})
         ],
         splitChunks: {
-            chunks: 'async',
+            chunks: 'all',
             minSize: 30000,
             minChunks: 1,
             maxAsyncRequests: 5,
@@ -91,6 +91,7 @@ module.exports = {
         }
     },
     plugins: [
+        // new BundleAnalyzerPlugin({analyzerMode: 'static', reportFilename: 'report.html'}),
         new CleanWebpackPlugin([
             'dist/assets',
         ], {
@@ -109,7 +110,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './app/tpl/index.html',
             filename: '../index.html',
-            chunks: ['main-vendor', 'main']
+            chunks: ['vendors~main', 'main']
         })
     ]
 };
