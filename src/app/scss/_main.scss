@@ -6,7 +6,7 @@ html {
   cursor: default;
 }
 #app {
-  min-height: 80%;
+  min-height: 100%;
   position: relative;
 }
 * {
@@ -26,3 +26,20 @@ html {
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+
+::-webkit-scrollbar              {
+  /* 1 */
+  width: 2pt;
+}
+::-webkit-scrollbar-button       {
+  /* 2 */
+  display: none;
+}
+::-webkit-scrollbar-track        { /* 3 */ }
+::-webkit-scrollbar-track-piece  { /* 4 */ }
+::-webkit-scrollbar-thumb        {
+  /* 5 */
+  background: $theme-color;
+}
+::-webkit-scrollbar-corner       { /* 6 */ }
+::-webkit-resizer                { /* 7 */ }
