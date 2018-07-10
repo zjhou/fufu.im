@@ -1,5 +1,6 @@
 const config = {
     apiEndPoint: 'https://fufufu.prismic.io/api/v2',
+    enableWorker: true,
     pagesize: 10,
     docType: {
         blog: 'fufuim',

@@ -3,7 +3,7 @@ import {Flex, Box} from 'grid-styled';
 import PropTypes from 'prop-types';
 import './style.scss';
 import Nav from '../../static-com/Nav/Nav';
-import {getBlogConfig, getNavItems, getPosts} from '../../../service/BlogApi';
+import {getPosts} from '../../../service/BlogApi';
 import Post from '../../static-com/Post/Post';
 import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
@@ -36,28 +36,19 @@ export default class Blog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
             loadingPosts: false,
-            blogConfig: {},
-            navItems: [],
+            blogConfig: props.config,
+            navItems: props.navItems,
             activePostsType: props.activePostsType || '',
             posts: {},
             hasException: false,
             pagenow: 1,
         };
         this.loadPosts = this.loadPosts.bind(this);
-        this.loadBlogAssets = this.loadBlogAssets.bind(this);
     }
 
     componentDidMount() {
-        this.loadBlogAssets()
-            .then(() => {
-                return this.loadPosts(this.state.activePostsType, this.state.pagenow);
-            })
-            .catch((e) => {
-                console.error(e);
-                this.setState({hasException: true});
-            });
+        return this.loadPosts(this.state.activePostsType, this.state.pagenow);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -70,17 +61,6 @@ export default class Blog extends React.Component {
             || (nextProps !== this.props)
             || (nextState.activePostsType !== this.state.activePostsType)
             || (nextState.posts !== this.state.posts);
-    }
-
-    async loadBlogAssets() {
-        let blogConfig = await getBlogConfig();
-        let navItems = await getNavItems();
-        this.setState({
-            blogConfig: blogConfig,
-            activePostsType: blogConfig.defaultType,
-            navItems: navItems,
-            loading: false,
-        });
     }
 
     async loadPosts(type, pagenow) {
@@ -164,5 +144,7 @@ export default class Blog extends React.Component {
 }
 
 Blog.propTypes = {
-    activePostsType: PropTypes.string
+    activePostsType: PropTypes.oneOf([PropTypes.object, PropTypes.string]), // null, or string
+    config: PropTypes.object.isRequired,
+    navItems: PropTypes.array.isRequired,
 };
