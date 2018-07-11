@@ -5,6 +5,15 @@ import {Blog, NavItem, Post} from './Dto';
 import {Get, resolvePromise} from '../utils/utils';
 
 const respFormatter = (resp, filter, singleResult) => {
+    if(resp === 'NULL' && !singleResult) {
+        return Promise.resolve({
+            list: [],
+            totalPages: 0,
+            totalNum: 0,
+            prevPage: false,
+            nextPage: false,
+        });
+    }
     let results = resp.results.map(filter);
     if (singleResult) {
         return Promise.resolve(results[0]);
@@ -67,7 +76,7 @@ const getPostsWithWorker = async (type, pagenow, pagesize, version) => {
         }
     });
 };
-const getPosts = async (type, pagenow) => {
+const getPosts = async (type, pagenow, hasNextPage) => {
     let cachedConfig = await localforage.getItem('blogConfig');
     let cachedPosts = await localforage.getItem(`${type}-${pagenow}`);
     let pagesize = (cachedConfig || Config).pagesize;
@@ -80,7 +89,9 @@ const getPosts = async (type, pagenow) => {
             }),
             Post.translate
         );
-    await getPostsWithWorker(type, pagenow + 1, pagesize, cachedConfig.version);
+    if(hasNextPage){
+        await getPostsWithWorker(type, pagenow + 1, pagesize, cachedConfig.version);
+    }
     results.list = await resolvePromise(results.list);
     results.pagenow = pagenow;
     return results;

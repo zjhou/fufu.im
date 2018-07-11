@@ -22,11 +22,7 @@ export default async function () {
         window.WORKER.onmessage = function (e) {
             let posts = e.data;
             let hasContent = posts.value.results && posts.value.results.length;
-            if(hasContent){
-                localforage.setItem(posts.key, posts.value);
-            }else{
-                localforage.removeItem(posts.key);
-            }
+            localforage.setItem(posts.key, hasContent ? posts.value  : 'NULL');
         };
     }
 

@@ -67,7 +67,7 @@ export default class Blog extends React.Component {
         if(!type){return;}
         scrollTo(0,-1);
         this.setState({loadingPosts: true});
-        let posts = await getPosts(type, pagenow);
+        let posts = await getPosts(type, pagenow, this.state.posts.nextPage);
         setTimeout(() => {
             this.setState({
                 loadingPosts: false,
