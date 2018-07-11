@@ -21,16 +21,16 @@ const Get = function (url, type) {
     };
 };
 
-const getPosts = (type, pagenow, pagesize) => {
+const getPosts = (type, pagenow, pagesize, version) => {
     const URL = `https://fufufu.cdn.prismic.io/api/v2/documents/search?`
         + `page=${pagenow}&pageSize=${pagesize}`
-        + `&ref=W0QLwx4AACsEmcZE&q=[[at(document.type, "${type}")]]`;
+        + `&ref=${version}&q=[[at(document.type, "${type}")]]`;
 
     return Get(URL);
 };
 
-const getPostsAndSendBack = (type, pagenow, pagesize) => {
-    getPosts(type, pagenow, pagesize)(
+const getPostsAndSendBack = (type, pagenow, pagesize, ref) => {
+    getPosts(type, pagenow, pagesize, ref)(
         (posts) => {
             postMessage({
                 key: type + '-' + pagenow,
@@ -44,11 +44,11 @@ onmessage = async function (e) {
     switch (MSG.type) {
         case 'init':
             MSG.content.types.map(type => {
-                getPostsAndSendBack(type, 1, MSG.content.pagesize);
+                getPostsAndSendBack(type, 1, MSG.content.pagesize, MSG.content.version);
             });
             break;
         case 'loadNextPage':
-            getPostsAndSendBack(MSG.content.type, MSG.content.pagenow, MSG.content.pagesize)
+            getPostsAndSendBack(MSG.content.type, MSG.content.pagenow, MSG.content.pagesize, MSG.content.version)
     }
 };
 

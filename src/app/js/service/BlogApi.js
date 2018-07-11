@@ -2,7 +2,7 @@ import Prismic from 'prismic-javascript';
 import localforage from 'localforage';
 import Config from '../../../config/blog.config';
 import {Blog, NavItem, Post} from './Dto';
-import {resolvePromise} from '../utils/utils';
+import {Get, resolvePromise} from '../utils/utils';
 
 const respFormatter = (resp, filter, singleResult) => {
     let results = resp.results.map(filter);
@@ -41,6 +41,8 @@ const getBlogConfig = async () => {
     return config;
 };
 
+const getBlogVer = async () => JSON.parse(await Get(Config.apiEndPoint)).refs[0].ref;
+
 const getNavItems = async () => {
     let results = await queryAPI(
         api => api.query(Prismic.Predicates.at('document.type', Config.docType.navItem), {
@@ -52,13 +54,14 @@ const getNavItems = async () => {
     return items.sort((a, b) => a.order > b.order);
 };
 
-const getPostsWithWorker = async (type, pagenow, pagesize) => {
+const getPostsWithWorker = async (type, pagenow, pagesize, version) => {
     let hasCached = (await localforage.keys()).includes(`${type}-${pagenow}`);
     if(!window.Worker || !Config.enableWorker || hasCached){ return false;}
     window.WORKER.postMessage({
         type: 'loadNextPage',
         content: {
             type,
+            version,
             pagenow,
             pagesize
         }
@@ -77,10 +80,10 @@ const getPosts = async (type, pagenow) => {
             }),
             Post.translate
         );
-    await getPostsWithWorker(type, pagenow + 1, pagesize);
+    await getPostsWithWorker(type, pagenow + 1, pagesize, cachedConfig.version);
     results.list = await resolvePromise(results.list);
     results.pagenow = pagenow;
     return results;
 };
 
-export {getBlogConfig, getNavItems, getPosts};
+export {getBlogConfig, getNavItems, getPosts, getBlogVer};
