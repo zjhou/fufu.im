@@ -16,11 +16,7 @@ article {
     margin-bottom: 15pt;
   }
 
-  img {max-width: 100%}
-
-  .markdown-body > img {
-    margin-bottom: 5pt;
-  }
+  img {max-width: 100%; margin-bottom: 5pt;}
 
   pre, .markdown-body {
     font-family: "Microsoft YaHei", serif;
