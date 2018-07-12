@@ -24,6 +24,7 @@ const Get = function (url, type) {
         client.send();
     });
 };
+
 const dateFormatter = (dataStr) => {
     let dt = new Date(dataStr);
     let mm = dt.getMonth() + 1; // getMonth() is zero-based
@@ -40,9 +41,15 @@ const resolvePromise = async (promiseArray) => {
     return results;
 };
 
-const getImage = async (url) => {
+const preloadImage = (url) => {
+    if(!url) return;
+    let image = new Image();
+    image.src = url;
+};
+
+const getImage = async (url, blob) => {
     let image = document.createElement('img');
-    let imageBlob = await localforage.getItem(url);
+    let imageBlob = blob || await localforage.getItem(url);
     if(!imageBlob) {
         try{
             imageBlob = await Get(url, 'blob');
@@ -68,4 +75,5 @@ const daysFrom = start => {
     let startMs= (new Date(start)).getTime();
     return parseInt((currentMs - startMs) / 1000 / 60 / 60 / 24);
 };
-export {getImage, Get, dateFormatter, resolvePromise, daysFrom};
+
+export {getImage, Get, dateFormatter, resolvePromise, daysFrom, preloadImage};
