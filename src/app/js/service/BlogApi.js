@@ -67,7 +67,7 @@ const getPostsWithWorker = async (type, pagenow, pagesize, version) => {
     let hasCached = (await localforage.keys()).includes(`${type}-${pagenow}`);
     if(!window.Worker || !Config.enableWorker || hasCached){ return false;}
     window.WORKER.postMessage({
-        type: 'loadNextPage',
+        type: 'loadPage',
         content: {
             type,
             version,
