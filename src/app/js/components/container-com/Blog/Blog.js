@@ -1,5 +1,4 @@
 import React from 'react';
-import {Flex, Box} from 'grid-styled';
 import PropTypes from 'prop-types';
 import './style.scss';
 import Nav from '../../static-com/Nav/Nav';
@@ -9,6 +8,7 @@ import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
 import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
 import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
+import {Row, Col} from '../../static-com/Layout/Layout';
 
 const Head =
     (props) => {
@@ -98,11 +98,11 @@ export default class Blog extends React.Component {
 
         return (
             <div className="blog">
-                <Flex>
-                    <Box width={100 / 960}>
+                <Row>
+                    <Col width={100 / 960}>
                         <DaysFrom start="2017-11-18"/>
-                    </Box>
-                    <Box width={314 / 960}>
+                    </Col>
+                    <Col width={293 / 960}>
                         <header>
                             <Head {...this.state.blogConfig}/>
                         </header>
@@ -117,8 +117,8 @@ export default class Blog extends React.Component {
                                 });
                             }}
                         />
-                    </Box>
-                    <Box width={280 / 960}>
+                    </Col>
+                    <Col width={280 / 960}>
                         <section data-loading={this.state.loadingPosts}>
                             {
                                 !this.state.loadingPosts &&
@@ -137,9 +137,9 @@ export default class Blog extends React.Component {
                             }}
                         />
                         }
-                    </Box>
-                    <Box width={276 / 960}/>
-                </Flex>
+                    </Col>
+                    <Col width={276 / 960}/>
+                </Row>
             </div>
         );
     }
