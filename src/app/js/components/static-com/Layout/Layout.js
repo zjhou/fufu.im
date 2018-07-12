@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const RowStyle = {
-    overflow: 'hidden',
     width: '100%'
 };
 
