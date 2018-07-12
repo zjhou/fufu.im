@@ -1,5 +1,5 @@
 import {dateFormatter, getImage} from '../utils/utils';
-import {RichText} from 'prismic-reactjs';
+import Render from './prismicLib/richtext';
 import {renderToString} from 'react-dom/server';
 import config from '../../../config/blog.config';
 
@@ -43,7 +43,7 @@ function Post() {
 async function contentFormatter(post) {
     switch (post.type) {
     case config.docType.cat :
-        return renderToString(RichText.render(post.data.content));
+        return renderToString(Render(post.data.content));
     case config.docType.photo:
         return await getImage(post.data.content.url);
     default:

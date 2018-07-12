@@ -9,7 +9,7 @@ const path = require('path')
 
 module.exports = {
     entry: {
-        'main': ['babel-polyfill', './app/js/main/index.js'],
+        'main': ['./app/js/main/index.js'],
     },
     output: {
         path: path.resolve(__dirname, '../dist/assets'),
@@ -91,7 +91,7 @@ module.exports = {
         }
     },
     plugins: [
-        // new BundleAnalyzerPlugin({analyzerMode: 'static', reportFilename: 'report.html'}),
+        new BundleAnalyzerPlugin({analyzerMode: 'static', reportFilename: 'report.html'}),
         new CleanWebpackPlugin([
             'dist/assets',
         ], {

@@ -18,8 +18,12 @@
     "@babel/core": "^7.0.0-beta.52",
     "@babel/preset-env": "^7.0.0-beta.52",
     "@babel/preset-react": "^7.0.0-beta.52",
+    "uglifyjs-webpack-plugin": "^1.2.7",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "autoprefixer": "^8.6.5",
+    "cssnano": "^4.0.0",
+    "webpack-bundle-analyzer": "^2.13.1",
     "babel-eslint": "^8.2.5",
     "babel-loader": "^8.0.0-beta.3",
     "babel-polyfill": "^6.26.0",
@@ -50,17 +54,12 @@
     "webpack-cli": "^3.0.8"
   },
   "dependencies": {
-    "autoprefixer": "^8.6.5",
-    "cssnano": "^4.0.0",
-    "grid-styled": "^4.3.2",
     "localforage": "^1.7.2",
+    "prismic-helpers": "^1.0.0",
     "prismic-javascript": "^1.5.0",
-    "prismic-reactjs": "^0.3.1",
+    "prismic-richtext": "^0.4.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "styled-components": "^3.3.3",
-    "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "react-dom": "^16.4.1"
   }
 }
