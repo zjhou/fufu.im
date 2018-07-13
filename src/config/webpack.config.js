@@ -9,7 +9,7 @@ const path = require('path')
 
 module.exports = {
     entry: {
-        'main': ['babel-polyfill', './app/js/main/index.js'],
+        'main': ['./app/js/main/index.js'],
     },
     output: {
         path: path.resolve(__dirname, '../dist/assets'),
