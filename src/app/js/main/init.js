@@ -2,8 +2,6 @@ import {getBlogConfig, getBlogVer, getNavItems} from '../service/BlogApi';
 import localforage from 'localforage';
 import Config from '../../../config/blog.config';
 import {preloadImage} from '../utils/utils';
-// import {getImage} from '../utils/utils';
-import '../utils/runtime';
 
 export default async function () {
     const blogConfig = await getBlogConfig();
