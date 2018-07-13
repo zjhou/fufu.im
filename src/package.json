@@ -26,7 +26,6 @@
     "webpack-bundle-analyzer": "^2.13.1",
     "babel-eslint": "^8.2.5",
     "babel-loader": "^8.0.0-beta.3",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
