@@ -91,7 +91,7 @@ module.exports = {
         }
     },
     plugins: [
-        // new BundleAnalyzerPlugin({analyzerMode: 'static', reportFilename: 'report.html'}),
+        new BundleAnalyzerPlugin({analyzerMode: 'static', reportFilename: 'report.html'}),
         new CleanWebpackPlugin([
             'dist/assets',
         ], {

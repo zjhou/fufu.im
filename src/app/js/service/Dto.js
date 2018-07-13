@@ -1,7 +1,12 @@
 import {dateFormatter, getImage} from '../utils/utils';
 import Render from './prismicLib/richtext';
 import {renderToString} from 'react-dom/server';
+import showdown from 'showdown';
 import config from '../../../config/blog.config';
+import '../../scss/markdown.css';
+
+const Converter = new showdown.Converter();
+Converter.setFlavor('github');
 
 function Blog() {
     this.title = '';
@@ -47,7 +52,7 @@ async function contentFormatter(post) {
     case config.docType.photo:
         return await getImage(post.data.content.url);
     default:
-        return post.data.content[0].text;
+        return Converter.makeHtml(post.data.content[0].text);
     }
 }
 

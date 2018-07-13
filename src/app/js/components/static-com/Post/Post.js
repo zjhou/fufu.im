@@ -24,18 +24,14 @@ class Content extends React.Component {
     updateContent() {
         this.cont.innerHTML = '';
         let props = this.props;
-        let pre = document.createElement('pre');
         switch (props.type) {
         case config.docType.photo:
-            this.cont.append(props.content); break;
-        case config.docType.cat:
-            this.cont.innerHTML = props.content; break;
+            this.cont.append(props.content);
+            break;
         default:
-            pre.innerHTML = props.content;
-            this.cont.append(pre);
+            this.cont.innerHTML = props.content;
         }
     }
-
 
     render() {
         return <div className="markdown-body" ref={ref => this.cont = ref}/>;

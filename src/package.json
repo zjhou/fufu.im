@@ -60,6 +60,7 @@
     "prismic-richtext": "^0.4.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "showdown": "^1.8.6"
   }
 }
