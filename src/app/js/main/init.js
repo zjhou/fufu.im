@@ -4,11 +4,12 @@ import Config from '../../../config/blog.config';
 import {preloadImage} from '../utils/utils';
 
 export default async function () {
+    window.onbeforeunload = function() {
+        localforage.clear();
+    };
     const blogConfig = await getBlogConfig();
     const navItems = await getNavItems();
     const ver = await getBlogVer();
-    blogConfig.version = ver;
-    localforage.setItem('blogConfig', blogConfig);
 
     if (window.Worker && Config.enableWorker) {
         let savePosts = (posts) => {
@@ -45,5 +46,4 @@ export default async function () {
         navItems: navItems,
         activePostsType: blogConfig.defaultType
     };
-
 }
