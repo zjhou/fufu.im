@@ -9,6 +9,7 @@ import PageNav from '../../static-com/PageNav/PageNav';
 import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
 import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
 import {Row, Col} from '../../static-com/Layout/Layout';
+import Config from '../../../../../config/blog.config';
 
 const Head =
     (props) => {
@@ -45,6 +46,8 @@ export default class Blog extends React.Component {
             pagenow: 1,
         };
         this.loadPosts = this.loadPosts.bind(this);
+        this.PcLayout = this.PcLayout.bind(this);
+        this.MobileLayout = this.MobileLayout.bind(this);
     }
 
     componentDidMount() {
@@ -88,6 +91,93 @@ export default class Blog extends React.Component {
         }
     }
 
+    MobileLayout() {
+        return (
+            <React.Fragment>
+                <header>
+                    <Head {...this.state.blogConfig}/>
+                    <DaysFrom start="2017-11-18"/>
+                </header>
+                <section data-loading={this.state.loadingPosts}>
+                    {
+                        !this.state.loadingPosts &&
+                        this.state.posts.list &&
+                        this.state.posts.list.map((post, index) =>
+                            <Post {...post} key={index}/>
+                        )
+                    }
+                </section>
+                {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                <PageNav
+                    {...this.state.posts}
+                    onClick={async (pagenow) => {
+                        await this.loadPosts(this.state.activePostsType, pagenow);
+                        this.setState({pagenow: pagenow});
+                    }}
+                />
+                }
+                <Nav
+                    navItems={this.state.navItems}
+                    disabled={this.state.loadingPosts || this.state.loading}
+                    activeType={this.state.activePostsType}
+                    onChange={(type) => {
+                        this.setState({
+                            activePostsType: type,
+                            pagenow: 1
+                        });
+                    }}
+                />
+            </React.Fragment>
+        );
+
+    }
+    PcLayout() {
+        return (
+            <Row>
+                <Col width={100 / 960}>
+                    <DaysFrom start="2017-11-18"/>
+                </Col>
+                <Col width={293 / 960}>
+                    <header>
+                        <Head {...this.state.blogConfig}/>
+                    </header>
+                    <Nav
+                        navItems={this.state.navItems}
+                        disabled={this.state.loadingPosts || this.state.loading}
+                        activeType={this.state.activePostsType}
+                        onChange={(type) => {
+                            this.setState({
+                                activePostsType: type,
+                                pagenow: 1
+                            });
+                        }}
+                    />
+                </Col>
+                <Col width={280 / 960}>
+                    <section data-loading={this.state.loadingPosts}>
+                        {
+                            !this.state.loadingPosts &&
+                            this.state.posts.list &&
+                            this.state.posts.list.map((post, index) =>
+                                <Post {...post} key={index}/>
+                            )
+                        }
+                    </section>
+                    {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                    <PageNav
+                        {...this.state.posts}
+                        onClick={async (pagenow) => {
+                            await this.loadPosts(this.state.activePostsType, pagenow);
+                            this.setState({pagenow: pagenow});
+                        }}
+                    />
+                    }
+                </Col>
+                <Col width={276 / 960}/>
+            </Row>
+        );
+    }
+
     render() {
         if (this.state.hasException) {
             return <ErrorPanel/>;
@@ -98,48 +188,11 @@ export default class Blog extends React.Component {
 
         return (
             <div className="blog">
-                <Row>
-                    <Col width={100 / 960}>
-                        <DaysFrom start="2017-11-18"/>
-                    </Col>
-                    <Col width={293 / 960}>
-                        <header>
-                            <Head {...this.state.blogConfig}/>
-                        </header>
-                        <Nav
-                            navItems={this.state.navItems}
-                            disabled={this.state.loadingPosts || this.state.loading}
-                            activeType={this.state.activePostsType}
-                            onChange={(type) => {
-                                this.setState({
-                                    activePostsType: type,
-                                    pagenow: 1
-                                });
-                            }}
-                        />
-                    </Col>
-                    <Col width={280 / 960}>
-                        <section data-loading={this.state.loadingPosts}>
-                            {
-                                !this.state.loadingPosts &&
-                                this.state.posts.list &&
-                                this.state.posts.list.map((post, index) =>
-                                    <Post {...post} key={index}/>
-                                )
-                            }
-                        </section>
-                        {(this.state.posts.prevPage || this.state.posts.nextPage) &&
-                        <PageNav
-                            {...this.state.posts}
-                            onClick={async (pagenow) => {
-                                await this.loadPosts(this.state.activePostsType, pagenow);
-                                this.setState({pagenow: pagenow});
-                            }}
-                        />
-                        }
-                    </Col>
-                    <Col width={276 / 960}/>
-                </Row>
+                {
+                    Config.isMobile
+                        ? <this.MobileLayout/>
+                        : <this.PcLayout />
+                }
             </div>
         );
     }

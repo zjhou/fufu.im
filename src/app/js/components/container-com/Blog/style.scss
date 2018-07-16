@@ -39,3 +39,38 @@
     margin-top: 42pt;
   }
 }
+
+#app[data-is-mobile="true"] {
+  .blog {
+    margin-top: unset;
+    height: 100%;
+    > header {
+      border-bottom: $theme-color solid 1pt;
+      position: sticky;
+      top: 26pt;
+    }
+    .blog-header {
+      position: unset;
+      .blog-title {
+        border: none;
+        font-size: 18pt;
+      }
+      .email {
+        font-size: 12pt;
+      }
+      div:last-child {
+        padding: 5pt 0 10pt;
+      }
+    }
+
+
+    section[data-loading="true"]{
+      top: 0;
+      padding-top: 42pt;;
+    }
+    section[data-loading="false"]{
+      top: 0;
+      padding-top: 40pt;;
+    }
+  }
+}
