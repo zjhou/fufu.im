@@ -50,9 +50,10 @@ class Nav extends React.Component {
 
     render() {
         let props = this.props;
+        let sortedNavItems = props.navItems.sort((a, b) => a.order - b.order);
         return (
             <ul className="nav">
-                {props.navItems.map((navItem, index) => {
+                {sortedNavItems.map((navItem, index) => {
                     return (
                         <NavItem
                             key={index}

@@ -76,7 +76,7 @@ const getNavItems = async () => {
         NavItem.translate,
     );
     let items = await resolvePromise(results.list);
-    return items.sort((a, b) => a.order > b.order);
+    return items.sort((a, b) => a.order - b.order);
 };
 
 const getPostsWithWorker = async (type, pagenow, pagesize, version) => {
