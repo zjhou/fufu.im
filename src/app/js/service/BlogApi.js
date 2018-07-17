@@ -100,9 +100,10 @@ const getPosts = async (type, pagenow, hasNextPage) => {
         ? await respFormatter(cachedPosts, Post.translate)
         : await queryAPI(
             {
-                type: type,
-                pagesize: pagesize,
-                pagenow: pagenow
+                type,
+                pagesize,
+                pagenow,
+                orderings: 'document.data.order desc'
             },
             Post.translate
         );
