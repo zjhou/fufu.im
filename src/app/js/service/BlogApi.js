@@ -103,7 +103,7 @@ const getPosts = async (type, pagenow, hasNextPage) => {
                 type,
                 pagesize,
                 pagenow,
-                orderings: 'document.data.order desc'
+                orderings: 'document.last_publication_date desc'
             },
             Post.translate
         );
