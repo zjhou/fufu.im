@@ -1,5 +1,5 @@
 const config = {
-    apiEndPoint: 'https://fufufu.prismic.io/api/v2',
+    apiEndPoint: 'https://fufu.im/api',
     enableWorker: true,
     pagesize: 10,
     docType: {

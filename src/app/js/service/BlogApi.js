@@ -30,7 +30,7 @@ const respFormatter = (resp, filter, singleResult) => {
 
 const queryAPI = async function (option, filter, singleResult) {
     const blogConfig = localforage.getItem('blogConfig');
-    const URL = `${Config.apiEndPoint}/documents/search?`
+    const URL = `${Config.apiEndPoint}/search?`
         + `page=${option.pagenow}&pageSize=${option.pagesize || (blogConfig || Config).pagesize}`
         + `&orderings=[${option.orderings}]`
         + `&ref=${await getBlogVer()}&q=[[at(document.type, "${option.type}")]]`;

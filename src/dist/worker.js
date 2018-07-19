@@ -22,7 +22,7 @@ const Get = function (url, type) {
 };
 
 const getPosts = (type, pagenow, pagesize, version) => {
-    const URL = `https://fufufu.cdn.prismic.io/api/v2/documents/search?`
+    const URL = `https://fufu.im/api/search?`
         + `page=${pagenow}&pageSize=${pagesize}`
         + `&orderings=[document.last_publication_date desc]`
         + `&ref=${version}&q=[[at(document.type, "${type}")]]`;
