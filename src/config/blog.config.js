@@ -1,5 +1,7 @@
 const config = {
     apiEndPoint: 'https://fufu.im/api',
+    cdnImgPath: 'https://fufufu.cdn.prismic.io/fufufu/',
+    localImgPath: 'https://fufu.im/imgs/',
     enableWorker: true,
     pagesize: 10,
     docType: {

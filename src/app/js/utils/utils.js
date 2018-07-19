@@ -1,4 +1,5 @@
 import localforage from 'localforage';
+import Config from '../../../config/blog.config';
 
 const Get = function (url, type) {
     return new Promise(function (resolve, reject) {
@@ -43,11 +44,17 @@ const resolvePromise = async (promiseArray) => {
 
 const preloadImage = (url) => {
     if(!url) return;
+    if(url.includes(Config.cdnImgPath)){
+        url = url.replace(Config.cdnImgPath, Config.localImgPath);
+    }
     let image = new Image();
     image.src = url;
 };
 
 const getImage = async (url, blob) => {
+    if(url.includes(Config.cdnImgPath)){
+        url = url.replace(Config.cdnImgPath, Config.localImgPath);
+    }
     let image = document.createElement('img');
     let imageBlob = blob || await localforage.getItem(url);
     if(!imageBlob) {
