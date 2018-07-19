@@ -1,5 +1,7 @@
 const config = {
-    apiEndPoint: 'https://fufufu.prismic.io/api/v2',
+    apiEndPoint: 'https://fufu.im/api',
+    cdnImgPath: 'https://fufufu.cdn.prismic.io/fufufu/',
+    localImgPath: 'https://fufu.im/imgs/',
     enableWorker: true,
     isMobile: window.matchMedia('(max-width: 500px)').matches,
     pagesize: 10,

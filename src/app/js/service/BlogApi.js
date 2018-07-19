@@ -30,7 +30,7 @@ const respFormatter = (resp, filter, singleResult) => {
 
 const queryAPI = async function (option, filter, singleResult) {
     const blogConfig = localforage.getItem('blogConfig');
-    const URL = `${Config.apiEndPoint}/documents/search?`
+    const URL = `${Config.apiEndPoint}/search?`
         + `page=${option.pagenow}&pageSize=${option.pagesize || (blogConfig || Config).pagesize}`
         + `&orderings=[${option.orderings}]`
         + `&ref=${await getBlogVer()}&q=[[at(document.type, "${option.type}")]]`;
@@ -76,7 +76,7 @@ const getNavItems = async () => {
         NavItem.translate,
     );
     let items = await resolvePromise(results.list);
-    return items.sort((a, b) => a.order > b.order);
+    return items.sort((a, b) => a.order - b.order);
 };
 
 const getPostsWithWorker = async (type, pagenow, pagesize, version) => {
@@ -100,9 +100,10 @@ const getPosts = async (type, pagenow, hasNextPage) => {
         ? await respFormatter(cachedPosts, Post.translate)
         : await queryAPI(
             {
-                type: type,
-                pagesize: pagesize,
-                pagenow: pagenow
+                type,
+                pagesize,
+                pagenow,
+                orderings: 'document.last_publication_date desc'
             },
             Post.translate
         );
