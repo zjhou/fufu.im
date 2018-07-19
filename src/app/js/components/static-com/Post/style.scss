@@ -24,3 +24,8 @@ article {
   }
 }
 
+
+#app[data-is-mobile="true"] {
+  article * {font-size: 14pt}
+}
+

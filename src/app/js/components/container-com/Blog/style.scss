@@ -43,11 +43,13 @@
 #app[data-is-mobile="true"] {
   .blog {
     margin-top: unset;
-    height: 100%;
+    height: calc(100% - 26pt);
+    padding: 26pt 20pt 0;
+    overflow: hidden;
     > header {
       border-bottom: $theme-color solid 1pt;
       position: sticky;
-      top: 26pt;
+      background: #fff;
     }
     .blog-header {
       position: unset;
@@ -71,6 +73,8 @@
     section[data-loading="false"]{
       top: 0;
       padding-top: 40pt;;
+      height: 370pt;
+      overflow-y: scroll;
     }
   }
 }

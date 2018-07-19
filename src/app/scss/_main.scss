@@ -27,6 +27,12 @@ html {
                                   supported by Chrome and Opera */
 }
 
+#app[data-is-mobile="true"] {
+  ::-webkit-scrollbar              {
+    width: 0;
+  }
+
+}
 ::-webkit-scrollbar              {
   /* 1 */
   width: 2pt;
