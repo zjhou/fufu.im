@@ -7,23 +7,23 @@
   "theme_color": "#ffba36",
   "description": "moon's blog",
   "icons": [{
-    "src": "images/homescreen48.png",
+    "src": "images/fufu48x48.png",
     "sizes": "48x48",
     "type": "image/png"
   }, {
-    "src": "images/homescreen72.png",
+    "src": "images/fufu72x72.png",
     "sizes": "72x72",
     "type": "image/png"
   }, {
-    "src": "images/homescreen96.png",
+    "src": "images/fufu96x96.png",
     "sizes": "96x96",
     "type": "image/png"
   }, {
-    "src": "images/homescreen144.png",
+    "src": "images/fufu144x144.png",
     "sizes": "144x144",
     "type": "image/png"
   }, {
-    "src": "images/homescreen168.png",
+    "src": "images/fufu168x168.png",
     "sizes": "168x168",
     "type": "image/png"
   }, {
