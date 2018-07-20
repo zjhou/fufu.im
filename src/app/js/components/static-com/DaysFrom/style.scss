@@ -23,3 +23,11 @@
     }
   }
 }
+
+#app[data-is-mobile="true"] {
+  .days-from {
+    top: 45pt;
+    right: 26pt;
+    opacity: 1;
+  }
+}
