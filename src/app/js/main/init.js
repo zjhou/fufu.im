@@ -4,9 +4,7 @@ import Config from '../../../config/blog.config';
 import {preloadImage} from '../utils/utils';
 
 export default async function () {
-    window.onbeforeunload = function() {
-        localforage.clear();
-    };
+    localforage.clear();
     const blogConfig = await getBlogConfig();
     const navItems = await getNavItems();
     const ver = await getBlogVer();
