@@ -68,7 +68,11 @@ export default class Blog extends React.Component {
 
     async loadPosts(type, pagenow) {
         if(!type){return;}
-        scrollTo(0,-1);
+        if(Config.isMobile){
+            this.postsWrapper.scrollTop = 0;
+        }else{
+            scrollTo(0,-1);
+        }
         this.setState({loadingPosts: true});
         let posts = await getPosts(type, pagenow, this.state.posts.nextPage);
         setTimeout(() => {
@@ -98,7 +102,9 @@ export default class Blog extends React.Component {
                     <Head {...this.state.blogConfig}/>
                     <DaysFrom start="2017-11-18"/>
                 </header>
-                <section data-loading={this.state.loadingPosts}>
+                <section data-loading={this.state.loadingPosts}
+                    ref={posts => this.postsWrapper = posts}
+                >
                     {
                         !this.state.loadingPosts &&
                         this.state.posts.list &&
