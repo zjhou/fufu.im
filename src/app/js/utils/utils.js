@@ -26,8 +26,8 @@ const Get = function (url, type) {
     });
 };
 
-const dateFormatter = (dataStr) => {
-    let dt = new Date(dataStr);
+const dateFormatter = (dateStr) => {
+    let dt = new Date(dateStr.replace('+0000', ''));
     let mm = dt.getMonth() + 1; // getMonth() is zero-based
     let dd = dt.getDate();
     let hh = dt.getHours();
