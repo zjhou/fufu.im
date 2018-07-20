@@ -26,11 +26,11 @@ const Get = function (url, type) {
     });
 };
 
-const dateFormatter = (dateStr) => {
+const dateFormatter = (dateStr, timeZoneNum = 0) => {
     let dt = new Date(dateStr.replace('+0000', ''));
     let mm = dt.getMonth() + 1; // getMonth() is zero-based
     let dd = dt.getDate();
-    let hh = dt.getHours();
+    let hh = dt.getHours() + timeZoneNum;
     let MM = dt.getMinutes();
     let add0 = num => num < 10 ? '0' + num : num;
     return `${dt.getFullYear()}-${add0(mm)}-${add0(dd)}  ${add0(hh)}:${add0(MM)}`;

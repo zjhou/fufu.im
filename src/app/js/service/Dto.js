@@ -66,7 +66,7 @@ Post.translate = async function (prismicResult) {
         let dateStr = prismicResult.last_publication_date
                 || prismicResult.first_publication_date
                 || prismicResult.data.date;
-        post.date = dateFormatter(dateStr);
+        post.date = dateFormatter(dateStr, 8);
     }
     post.content = await contentFormatter(prismicResult);
     return post;
