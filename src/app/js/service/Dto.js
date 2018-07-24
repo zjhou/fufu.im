@@ -46,11 +46,12 @@ function Post() {
 }
 
 async function contentFormatter(post) {
+    let imgTpl = (url) => `<img src="${url}"/>`;
     switch (post.type) {
     case config.docType.cat :
         return renderToString(Render(post.data.content));
     case config.docType.photo:
-        return await getImage(post.data.content.url);
+        return imgTpl(post.data.content.url.replace(config.cdnImgPath, config.localImgPath));
     default:
         return Converter.makeHtml(post.data.content[0].text);
     }
