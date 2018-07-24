@@ -13,3 +13,7 @@
     transition: all .2s;
   }
 }
+
+#app[data-is-mobile="true"] {
+  .page-nav {margin-bottom: 50pt}
+}

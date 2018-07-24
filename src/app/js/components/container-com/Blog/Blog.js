@@ -112,16 +112,16 @@ export default class Blog extends React.Component {
                             <Post {...post} key={index}/>
                         )
                     }
+                    {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                    <PageNav
+                        {...this.state.posts}
+                        onClick={async (pagenow) => {
+                            await this.loadPosts(this.state.activePostsType, pagenow);
+                            this.setState({pagenow: pagenow});
+                        }}
+                    />
+                    }
                 </section>
-                {(this.state.posts.prevPage || this.state.posts.nextPage) &&
-                <PageNav
-                    {...this.state.posts}
-                    onClick={async (pagenow) => {
-                        await this.loadPosts(this.state.activePostsType, pagenow);
-                        this.setState({pagenow: pagenow});
-                    }}
-                />
-                }
                 <Nav
                     navItems={this.state.navItems}
                     disabled={this.state.loadingPosts || this.state.loading}
