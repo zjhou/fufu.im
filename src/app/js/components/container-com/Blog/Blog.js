@@ -112,7 +112,9 @@ export default class Blog extends React.Component {
                             <Post {...post} key={index}/>
                         )
                     }
-                    {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                    {
+                        !this.state.loadingPosts &&
+                        (this.state.posts.prevPage || this.state.posts.nextPage) &&
                     <PageNav
                         {...this.state.posts}
                         onClick={async (pagenow) => {

@@ -15,5 +15,10 @@
 }
 
 #app[data-is-mobile="true"] {
-  .page-nav {margin-bottom: 50pt}
+  .page-nav {
+    margin-bottom: 50pt;
+    button {
+      font-size: 12pt;
+    }
+  }
 }

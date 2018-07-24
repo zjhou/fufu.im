@@ -44,12 +44,13 @@
   .blog {
     margin-top: unset;
     height: calc(100% - 26pt);
-    padding: 26pt 20pt 0;
+    padding-top: 26pt;
     overflow: hidden;
     > header {
       border-bottom: $theme-color solid 1pt;
       position: sticky;
       background: #fff;
+      margin: 0 20pt
     }
     .blog-header {
       position: unset;
@@ -68,11 +69,11 @@
 
     section[data-loading="true"]{
       top: 0;
-      padding-top: 42pt;;
+      padding: 42pt 20pt 0;
     }
     section[data-loading="false"]{
       top: 0;
-      padding-top: 40pt;;
+      padding: 40pt 20pt 0;
       max-height: calc(100vh - 162pt);
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
