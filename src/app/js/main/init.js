@@ -35,6 +35,10 @@ export default async function () {
                 break;
             case 'extractImageUrl':
                 MSG.content.forEach(preloadImage);
+                break;
+            case 'extractPhotoUrl':
+                MSG.content.forEach(preloadImage);
+                break;
             }
         };
     }

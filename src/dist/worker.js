@@ -39,6 +39,12 @@ const getPostsAndSendBack = (type, pagenow, pagesize, ref) => {
                     content: extractImageUrl(posts)
                 });
             }
+            if(type === 'photo'){
+                postMessage({
+                    type: 'extractPhotoUrl',
+                    content: extractPhotoUrl(posts)
+                });
+            }
             postMessage({
                 type: 'loadPage',
                 content: {
@@ -47,6 +53,10 @@ const getPostsAndSendBack = (type, pagenow, pagesize, ref) => {
                 }
             });
         });
+};
+
+const extractPhotoUrl = (response) => {
+    return response.results.map(post => post.data.content.url)
 };
 
 const extractImageUrl = (response) => {
