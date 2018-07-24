@@ -1,7 +1,7 @@
 import {getBlogConfig, getBlogVer, getNavItems} from '../service/BlogApi';
 import localforage from 'localforage';
 import Config from '../../../config/blog.config';
-import {preloadImage} from '../utils/utils';
+import { preloadImage} from '../utils/utils';
 
 export default async function () {
     localforage.clear();
@@ -35,10 +35,6 @@ export default async function () {
                 break;
             case 'extractImageUrl':
                 MSG.content.forEach(preloadImage);
-                break;
-            case 'extractPhotoUrl':
-                MSG.content.forEach(preloadImage);
-                break;
             }
         };
     }

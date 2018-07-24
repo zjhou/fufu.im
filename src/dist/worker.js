@@ -33,16 +33,10 @@ const getPosts = (type, pagenow, pagesize, version) => {
 const getPostsAndSendBack = (type, pagenow, pagesize, ref) => {
     getPosts(type, pagenow, pagesize, ref)(
         (posts) => {
-            if(type === 'cat'){
+            if(type === 'cat' || type === 'photo'){
                 postMessage({
                     type: 'extractImageUrl',
-                    content: extractImageUrl(posts)
-                });
-            }
-            if(type === 'photo'){
-                postMessage({
-                    type: 'extractPhotoUrl',
-                    content: extractPhotoUrl(posts)
+                    content: extractImageUrl(posts, type)
                 });
             }
             postMessage({
@@ -55,26 +49,27 @@ const getPostsAndSendBack = (type, pagenow, pagesize, ref) => {
         });
 };
 
-const extractPhotoUrl = (response) => {
-    return response.results.map(post => post.data.content.url)
-};
 
-const extractImageUrl = (response) => {
-    let urls = [];
-    let getUrlFromPostData = (result) =>
-        result.data.content.filter(cont => cont.type === 'image').map(cont => cont.url);
+const extractImageUrl = (response, type) => {
+    if(type === 'photo'){
+        return response.results.map(post => post.data.content.url)
+    }else if(type === 'cat'){
+        let urls = [];
+        let getUrlFromPostData = (result) =>
+            result.data.content.filter(cont => cont.type === 'image').map(cont => cont.url);
 
-    try {
-        response.results.forEach(post => {
-            urls = urls.concat(getUrlFromPostData(post));
-        });
-    }
-    catch (e) {
-        console.error(e);
+        try {
+            response.results.forEach(post => {
+                urls = urls.concat(getUrlFromPostData(post));
+            });
+        }
+        catch (e) {
+            console.error(e);
+            return urls;
+        }
+
         return urls;
     }
-
-    return urls;
 };
 
 
