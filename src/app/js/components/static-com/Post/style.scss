@@ -12,6 +12,9 @@ article {
     position: relative;
     top: 15pt
   }
+  &:last-child::after{
+    border: none;
+  }
   header {
     margin-bottom: 15pt;
   }
