@@ -4,43 +4,23 @@ import './style.scss';
 import Nav from '../../static-com/Nav/Nav';
 import {getPosts} from '../../../service/BlogApi';
 import Post from '../../static-com/Post/Post';
+import BlogHeader from '../../static-com/BlogHeader/BlogHerder';
 import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
 import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
 import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
 import {Row, Col} from '../../static-com/Layout/Layout';
 import Config from '../../../../../config/blog.config';
+import {connect} from 'react-redux';
+import {switchPostType} from '../../../../redux/actions/index';
 
-const Head =
-    (props) => {
-        return (
-            <div className="blog-header">
-                <div>
-                    <span className="blog-title high-light">
-                        {props.title}
-                    </span>
-                </div>
-                <div>
-                    <span className="email high-light">
-                        {props.email}
-                    </span>
-                </div>
-            </div>
-        );
-    };
-
-Head.propTypes = {
-    title: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired
-};
-export default class Blog extends React.Component {
+class Blog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             loadingPosts: false,
             blogConfig: props.config,
             navItems: props.navItems,
-            activePostsType: props.activePostsType || '',
             posts: {},
             hasException: false,
             pagenow: 1,
@@ -51,7 +31,7 @@ export default class Blog extends React.Component {
     }
 
     componentDidMount() {
-        return this.loadPosts(this.state.activePostsType, this.state.pagenow);
+        return this.loadPosts(this.props.activePostsType, this.state.pagenow);
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -63,6 +43,7 @@ export default class Blog extends React.Component {
             || (nextState.navItems !== this.state.navItems)
             || (nextProps !== this.props)
             || (nextState.activePostsType !== this.state.activePostsType)
+            || (nextProps.activePostsType !== this.props.activePostsType)
             || (nextState.posts !== this.state.posts);
     }
 
@@ -87,7 +68,7 @@ export default class Blog extends React.Component {
         if (this.state.activePostsType !== prevState.activePostsType ||
             prevProps.activePostsType !== this.props.activePostsType
         ) {
-            this.loadPosts(this.state.activePostsType, this.state.pagenow)
+            this.loadPosts(this.props.activePostsType, this.state.pagenow)
                 .catch(e => {
                     console.error(e);
                     this.setState({loadingPosts: false});
@@ -99,7 +80,7 @@ export default class Blog extends React.Component {
         return (
             <React.Fragment>
                 <header>
-                    <Head {...this.state.blogConfig}/>
+                    <BlogHeader {...this.state.blogConfig}/>
                     <DaysFrom start="2017-11-18"/>
                 </header>
                 <section data-loading={this.state.loadingPosts}
@@ -129,6 +110,7 @@ export default class Blog extends React.Component {
                     disabled={this.state.loadingPosts || this.state.loading}
                     activeType={this.state.activePostsType}
                     onChange={(type) => {
+                        this.props.dispatch(switchPostType(type));
                         this.setState({
                             activePostsType: type,
                             pagenow: 1
@@ -147,15 +129,15 @@ export default class Blog extends React.Component {
                 </Col>
                 <Col width={293 / 960}>
                     <header>
-                        <Head {...this.state.blogConfig}/>
+                        <BlogHeader {...this.state.blogConfig}/>
                     </header>
                     <Nav
                         navItems={this.state.navItems}
                         disabled={this.state.loadingPosts || this.state.loading}
                         activeType={this.state.activePostsType}
                         onChange={(type) => {
+                            this.props.dispatch(switchPostType(type));
                             this.setState({
-                                activePostsType: type,
                                 pagenow: 1
                             });
                         }}
@@ -207,7 +189,14 @@ export default class Blog extends React.Component {
 }
 
 Blog.propTypes = {
-    activePostsType: PropTypes.oneOf([PropTypes.object, PropTypes.string]), // null, or string
+    activePostsType: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), // null, or string
     config: PropTypes.object.isRequired,
     navItems: PropTypes.array.isRequired,
 };
+
+export default connect(function (state, props) {
+    return {
+        ...props,
+        activePostsType: state,
+    };
+})(Blog);
