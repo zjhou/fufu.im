@@ -6,11 +6,11 @@ import Init from './init';
 import ErrorPanel from '../components/static-com/ErrorBoundary/ErrorPanel';
 import Spinner from '../components/static-com/Spinner/Spinner';
 import Config from '../../../config/blog.config';
-import test from '../../redux/reducers/index';
+import rootReducer from '../../redux/reducers/index';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 
-const store = createStore(test);
+const store = createStore(rootReducer);
 
 window.onload = function () {
     const $app = document.getElementById('app');

@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from '../Image';
 import './style.scss';
+import {connect} from 'react-redux';
+import {switchPostType, gotoPage} from '../../../../redux/actions/index';
 
 const NavItem = (props) =>
     <li className="nav-item noselect"
         data-selected={props.selected}
-        onClick={() => {props.onClick(props.text);}}
+        onClick={() => {
+            props.dispatch(switchPostType(props.text));
+            props.dispatch(gotoPage(1));
+        }}
     >
         <div className="icon-wrap">
             <Image src={
@@ -19,65 +24,35 @@ const NavItem = (props) =>
     </li>;
 
 NavItem.propTypes = {
-    onClick: PropTypes.func,
     selected: PropTypes.bool,
     icon: PropTypes.object.isRequired,
     highlightIcon: PropTypes.object.isRequired,
     text: PropTypes.string.isRequired,
+    dispatch: PropTypes.func
 };
 
-class Nav extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeType: props.activeType,
-        };
-    }
+const ConnectedNavItem = connect()(NavItem);
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.disabled !== this.props.disabled
-            || nextState.activeType!== this.state.activeType
-            || nextProps.activeType!== this.props.activeType
-            || nextProps.onChange !== this.props.onChange
-            || nextProps.navItems !== this.props.navItems;
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if(!this.props.disabled && prevState.activeType !== this.state.activeType){
-            this.props.onChange && this.props.onChange(this.state.activeType);
-        }
-    }
-
-    render() {
-        let props = this.props;
-        let sortedNavItems = props.navItems.sort((a, b) => a.order - b.order);
-        return (
-            <ul className="nav">
-                {sortedNavItems.map((navItem, index) => {
-                    return (
-                        <NavItem
-                            key={index}
-                            {...navItem}
-                            selected={navItem.text === this.state.activeType}
-                            onClick={(text) => {
-                                if(this.props.disabled) return;
-                                this.setState({
-                                    activeIdx: index,
-                                    activeType: text
-                                });
-                            }}
-                        />
-                    );
-                })}
-            </ul>
-        );
-    }
-}
+const Nav = (props) => {
+    let sortedNavItems = props.navItems.sort((a, b) => a.order - b.order);
+    return (
+        <ul className="nav">
+            {sortedNavItems.map((navItem, index) => {
+                return (
+                    <ConnectedNavItem
+                        key={index}
+                        {...navItem}
+                        selected={navItem.text === props.activePostsType}
+                    />
+                );
+            })}
+        </ul>
+    );
+};
 
 Nav.propTypes = {
     navItems: PropTypes.arrayOf(PropTypes.shape(NavItem.propTypes)),
-    activeType: PropTypes.string,
-    onChange: PropTypes.func,
+    activePostsType: PropTypes.string,
     disabled: PropTypes.bool
 };
 

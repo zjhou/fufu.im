@@ -1,6 +1,8 @@
 import React from 'react';
+import {nextPage, prevPage} from '../../../../redux/actions/index';
 import PropTypes from 'prop-types';
 import './style.scss';
+import {connect} from 'react-redux';
 
 const PageNav = (props) => {
     return (
@@ -10,7 +12,7 @@ const PageNav = (props) => {
                 type="button"
                 className="high-light"
                 onClick={() => {
-                    props.onClick(props.pagenow - 1);
+                    props.dispatch(prevPage(props.pagenow));
                 }}
             >上一页</button>
             }
@@ -19,7 +21,7 @@ const PageNav = (props) => {
                 type="button"
                 className="high-light"
                 onClick={() => {
-                    props.onClick(props.pagenow + 1);
+                    props.dispatch(nextPage(props.pagenow));
                 }}
             >下一页</button>
             }
@@ -31,7 +33,7 @@ PageNav.propTypes = {
     prevPage: PropTypes.bool,
     nextPage: PropTypes.bool,
     pagenow: PropTypes.number,
-    onClick: PropTypes.func,
+    dispatch: PropTypes.func
 };
 
-export default PageNav;
+export default connect()(PageNav);
