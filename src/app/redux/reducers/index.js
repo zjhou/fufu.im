@@ -8,6 +8,22 @@ const activePostsType = (state = null, action) => {
     }
 };
 
+const posts = (state = {}, action) => {
+    if( action.type === 'FETCH_POSTS_DONE' ) {
+        return action.posts;
+    }else{
+        return state;
+    }
+};
+
+const loadingPosts = (state = false, action) => {
+    if( action.type === 'FETCH_POSTS') {
+        return !action.done;
+    } else {
+        return state;
+    }
+};
+
 const pagenow = (state = 1, action) => {
     switch (action.type) {
     case 'GOTO_PAGE': return action.pagenow;
@@ -20,4 +36,6 @@ const pagenow = (state = 1, action) => {
 export default combineReducers({
     activePostsType,
     pagenow,
+    posts,
+    loadingPosts
 });

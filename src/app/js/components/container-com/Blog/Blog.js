@@ -5,22 +5,18 @@ import Nav from '../../static-com/Nav/Nav';
 import {getPosts} from '../../../service/BlogApi';
 import Post from '../../static-com/Post/Post';
 import BlogHeader from '../../static-com/BlogHeader/BlogHerder';
-import Spinner from '../../static-com/Spinner/Spinner';
 import PageNav from '../../static-com/PageNav/PageNav';
 import ErrorPanel from '../../static-com/ErrorBoundary/ErrorPanel';
 import DaysFrom from '../../static-com/DaysFrom/DaysFrom';
 import {Row, Col} from '../../static-com/Layout/Layout';
 import Config from '../../../../../config/blog.config';
 import {connect} from 'react-redux';
+import {fetchPosts, fetchPostsDone} from '../../../../redux/actions/index';
 
 class Blog extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loadingPosts: false,
-            posts: {},
-            hasException: false,
-        };
+        this.state = {hasException: false};
         this.loadPosts = this.loadPosts.bind(this);
         this.PcLayout = this.PcLayout.bind(this);
         this.MobileLayout = this.MobileLayout.bind(this);
@@ -31,13 +27,10 @@ class Blog extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (nextState.loading !== this.state.loading)
-            || (nextState.loadingPosts !== this.state.loadingPosts)
+        return (nextProps.loadingPosts !== this.props.loadingPosts)
             || (nextState.hasException !== this.state.hasException)
-            || (nextProps !== this.props)
             || (nextProps.activePostsType !== this.props.activePostsType)
-            || (nextProps.pagenow !== this.props.pagenow)
-            || (nextState.posts !== this.state.posts);
+            || (nextProps.pagenow !== this.props.pagenow);
     }
 
     async loadPosts(type, pagenow) {
@@ -47,13 +40,11 @@ class Blog extends React.Component {
         }else{
             scrollTo(0,-1);
         }
-        this.setState({loadingPosts: true});
-        let posts = await getPosts(type, pagenow, this.state.posts.nextPage);
+        this.props.dispatch(fetchPosts(false));
+        let posts = await getPosts(type, pagenow, this.props.posts.nextPage);
         setTimeout(() => {
-            this.setState({
-                loadingPosts: false,
-                posts: posts
-            });
+            this.props.dispatch(fetchPostsDone('SUCCESS', posts));
+            this.props.dispatch(fetchPosts(true));
         }, 200);
     }
 
@@ -65,7 +56,7 @@ class Blog extends React.Component {
             this.loadPosts(this.props.activePostsType, this.props.pagenow)
                 .catch(e => {
                     console.error(e);
-                    this.setState({loadingPosts: false});
+                    this.dispatch(fetchPostsDone('ERROR'));
                 });
         }
     }
@@ -77,27 +68,27 @@ class Blog extends React.Component {
                     <BlogHeader {...this.props.config}/>
                     <DaysFrom start="2017-11-18"/>
                 </header>
-                <section data-loading={this.state.loadingPosts}
+                <section data-loading={this.props.loadingPosts}
                     ref={posts => this.postsWrapper = posts}
                 >
                     {
-                        !this.state.loadingPosts &&
-                        this.state.posts.list &&
-                        this.state.posts.list.map((post, index) =>
+                        !this.props.loadingPosts &&
+                        this.props.posts.list &&
+                        this.props.posts.list.map((post, index) =>
                             <Post {...post} key={index}/>
                         )
                     }
                     {
-                        !this.state.loadingPosts &&
-                        (this.state.posts.prevPage || this.state.posts.nextPage) &&
+                        !this.props.loadingPosts &&
+                        (this.props.posts.prevPage || this.props.posts.nextPage) &&
                     <PageNav
-                        {...this.state.posts}
+                        {...this.props.posts}
                     />
                     }
                 </section>
                 <Nav
                     navItems={this.props.navItems}
-                    disabled={this.state.loadingPosts || this.state.loading}
+                    disabled={this.props.loadingPosts}
                     activePostsType={this.props.activePostsType}
                 />
             </React.Fragment>
@@ -116,23 +107,23 @@ class Blog extends React.Component {
                     </header>
                     <Nav
                         navItems={this.props.navItems}
-                        disabled={this.state.loadingPosts || this.state.loading}
-                        activeType={this.state.activePostsType}
+                        disabled={this.props.loadingPosts}
+                        activeType={this.props.activePostsType}
                     />
                 </Col>
                 <Col width={280 / 960}>
-                    <section data-loading={this.state.loadingPosts}>
+                    <section data-loading={this.props.loadingPosts}>
                         {
-                            !this.state.loadingPosts &&
-                            this.state.posts.list &&
-                            this.state.posts.list.map((post, index) =>
+                            !this.props.loadingPosts &&
+                            this.props.posts.list &&
+                            this.props.posts.list.map((post, index) =>
                                 <Post {...post} key={index}/>
                             )
                         }
                     </section>
-                    {(this.state.posts.prevPage || this.state.posts.nextPage) &&
+                    {(this.props.posts.prevPage || this.props.posts.nextPage) &&
                     <PageNav
-                        {...this.state.posts}
+                        {...this.props.posts}
                     />
                     }
                 </Col>
@@ -144,9 +135,6 @@ class Blog extends React.Component {
     render() {
         if (this.state.hasException) {
             return <ErrorPanel/>;
-        }
-        if (this.state.loading) {
-            return <Spinner/>;
         }
 
         return (

@@ -17,3 +17,13 @@ export const prevPage = (pagenow) => ({
     type: 'PREV_PAGE',
     prevPage: pagenow - 1
 });
+
+export const fetchPosts = (isDone) => ({
+    type: 'FETCH_POSTS',
+    done: isDone
+});
+
+export const fetchPostsDone = (status, response) => ({
+    type: 'FETCH_POSTS_DONE',
+    posts: status === 'ERROR' ? {} : response
+});
