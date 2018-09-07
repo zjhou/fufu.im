@@ -108,7 +108,7 @@ class Blog extends React.Component {
                     <Nav
                         navItems={this.props.navItems}
                         disabled={this.props.loadingPosts}
-                        activeType={this.props.activePostsType}
+                        activePostsType={this.props.activePostsType}
                     />
                 </Col>
                 <Col width={280 / 960}>
