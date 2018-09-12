@@ -27,7 +27,7 @@ const Get = function (url, type) {
 };
 
 const dateFormatter = (dateStr, timeZoneNum = 0) => {
-    let dt = new Date(dateStr.replace('+0000', ''));
+    let dt = new Date(dateStr.replace('+0000', '').replace(/-/g, '/').replace('T', ' '));
     let mm = dt.getMonth() + 1; // getMonth() is zero-based
     let dd = dt.getDate();
     let hh = dt.getHours() + timeZoneNum;
