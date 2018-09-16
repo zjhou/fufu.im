@@ -17,6 +17,9 @@ article {
   }
   header {
     margin-bottom: 15pt;
+    .title {
+      -ms-word-break: break-all;
+      word-break: break-all;}
   }
 
   img {max-width: 100%; margin-bottom: 5pt; border-radius: 10pt;}
