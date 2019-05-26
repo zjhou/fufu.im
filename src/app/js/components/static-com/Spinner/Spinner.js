@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-const spinner = () => <div className="lds-ellipsis"><div/><div/><div/><div/></div>;
+// const spinner = () => <div className="lds-ellipsis"><div/><div/><div/><div/></div>;
 const walkingSquare = () => {
     return (
         <div className="spinner">
