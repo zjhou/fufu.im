@@ -1,6 +1,0 @@
-src/node_modules
-src/dist/assets
-src/dist/index.html
-src/package-lock.json
-.vscode
-.idea
