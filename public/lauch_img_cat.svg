@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300px" height="190px" viewBox="0 0 300 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>lauch_img_cat</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="fufu_lauch" transform="translate(-570.000000, -218.000000)">
+            <g id="lauch_img_cat" transform="translate(570.000000, 218.000000)">
+                <rect id="矩形" x="0" y="0" width="300" height="190"></rect>
+                <g id="猫爪" transform="translate(79.000000, 34.000000)">
+                    <g id="爪子" fill="#FFE6AA">
+                        <path d="M11.1844313,21.8689876 C13.4669299,21.8604066 15.7286372,27.38671 17.9695534,38.4478978 L4.27456204,38.4994239 C6.59864302,27.4210607 8.90193279,21.877582 11.1844313,21.8689876 Z" id="三角形" transform="translate(11.122058, 30.184206) rotate(-39.000000) translate(-11.122058, -30.184206) "></path>
+                        <path d="M70.3911111,0 C72.6666555,0 74.9421999,5.55172414 77.2177443,16.6551724 L63.564478,16.6551724 C65.8400224,5.55172414 68.1155668,0 70.3911111,0 Z" id="三角形备份"></path>
+                        <path d="M132.540208,22.6372976 C134.821529,22.6455538 137.122824,28.1915453 139.444093,39.275272 L125.756166,39.2257716 C127.99754,28.158545 130.258887,22.6290537 132.540208,22.6372976 Z" id="三角形备份-2" transform="translate(132.600130, 30.956285) rotate(-325.000000) translate(-132.600130, -30.956285) "></path>
+                    </g>
+                    <g id="编组" transform="translate(4.000000, 12.000000)" fill="#F3F3F3">
+                        <ellipse id="椭圆形" cx="66.6973684" cy="72.0065789" rx="57.3236842" ry="37.9934211"></ellipse>
+                        <ellipse id="椭圆形" cx="29.2026316" cy="43.7828947" rx="29.2026316" ry="27.1381579"></ellipse>
+                        <ellipse id="椭圆形备份" cx="107.797368" cy="43.7828947" rx="29.2026316" ry="27.1381579"></ellipse>
+                        <ellipse id="椭圆形" cx="67.0578947" cy="31.1184211" rx="29.5631579" ry="31.1184211"></ellipse>
+                    </g>
+                    <g id="编组-2" transform="translate(13.000000, 23.000000)" fill="#B6B6B6">
+                        <ellipse id="椭圆形" transform="translate(57.926243, 63.413978) rotate(1.000000) translate(-57.926243, -63.413978) " cx="57.9262432" cy="63.4139783" rx="36.3354284" ry="24.2397959"></ellipse>
+                        <ellipse id="椭圆形" transform="translate(15.829268, 30.402762) rotate(1.000000) translate(-15.829268, -30.402762) " cx="15.8292683" cy="30.4027619" rx="15.1097821" ry="13.747944"></ellipse>
+                        <ellipse id="椭圆形备份" transform="translate(102.183289, 28.955718) rotate(1.000000) translate(-102.183289, -28.955718) " cx="102.183289" cy="28.9557176" rx="15.1097821" ry="13.024368"></ellipse>
+                        <ellipse id="椭圆形" transform="translate(57.573642, 16.280488) rotate(1.000000) translate(-57.573642, -16.280488) " cx="57.5736424" cy="16.2804878" rx="14.3902687" ry="15.5568839"></ellipse>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
