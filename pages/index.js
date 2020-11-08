@@ -1,8 +1,14 @@
 import { NeoLoading } from '../components/NeoLoading';
+import Head from 'next/head'
+
 
 export default function Home() {
   return (
     <div className="container">
+      <Head>
+        <title>MOON's BLOG</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <main>
         <div className="logo">
           <img src="/lauch_img_cat.svg" alt=""/>
