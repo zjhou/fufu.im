@@ -1,24 +1,56 @@
-import { NeoLoading } from '../components/NeoLoading';
 import Head from 'next/head'
+import { useState } from "react";
+import { ConfigProvider } from 'antd';
+import {BoxLoader} from "../components/BoxLoader";
+
+import 'antd/dist/antd.css'
+import {Articles} from "../components/Articles";
+import {Logo} from "../icons";
 
 
 export default function Home() {
-  return (
+  const [loading, setLoading] = useState(true);
+
+  const promise20 = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1000)
+    })
+  };
+
+  const promise26 = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1.3 * 1000 * 2.5)
+    })
+  }
+
+  const p = Promise.all([
+    promise20(),
+    promise26()
+  ]);
+
+  p.then(() => {
+    setLoading(false);
+  });
+
+  const content = (
     <div className="container">
       <Head>
         <title>Moon's Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {
+        loading ? null : <img src="/box.png" className="logo" width={48} />
+      }
       <main>
-        <div className="logo">
-          <img src="/lauch_img_cat.svg" alt=""/>
-        </div>
-        <div className="title">
-          <div className="main-title">FUFU.IM</div>
-          <div className="sub-title">MOON'S BLOG</div>
-        </div>
         <div className="loading">
-          <NeoLoading />
+          {loading
+            ? <BoxLoader />
+            : <Articles />
+          }
         </div>
       </main>
 
@@ -49,7 +81,7 @@ export default function Home() {
           align-items: center;
           color: #8A8A8A;
         }
-        
+       
         main .title > .main-title {
           font-size: 32px;
           margin-bottom: 4px;
@@ -61,11 +93,16 @@ export default function Home() {
         }
         
         main .loading {
-          margin: 110px 0;
-        }
+          margin-bottom: 70px;
+        }        
       `}</style>
 
       <style jsx global>{`
+        .logo {
+          position: absolute;
+          top: 60px;
+          left: 60px;
+        }
         html,
         body {
           padding: 0;
@@ -78,7 +115,21 @@ export default function Home() {
         * {
           box-sizing: border-box;
         }
+        
+        @keyframes loaderColor {
+          from {
+            stroke: #e3e3e3;
+          }
+          to {
+            stroke: #414141;
+          }
+        }
       `}</style>
     </div>
+  );
+  return (
+    <ConfigProvider>
+      {content}
+    </ConfigProvider>
   )
 }

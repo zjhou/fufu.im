@@ -1,0 +1,9 @@
+.articles {
+  height: 544px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+}
