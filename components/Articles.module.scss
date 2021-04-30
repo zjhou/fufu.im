@@ -1,5 +1,6 @@
 .articles {
   height: 544px;
+  min-width: 1150px;
   overflow-x: hidden;
   overflow-y: auto;
   &::-webkit-scrollbar {

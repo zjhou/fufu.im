@@ -7,7 +7,7 @@ import styles from './ArticleCard.module.scss'
 export const ArticleCard = (props) => {
   const {
     title = '艺术家的病',
-    coverURL = 'http://source.unsplash.com/200x200',
+    coverURL = '',
     pageView = 3,
   } = props;
   return (
