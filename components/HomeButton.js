@@ -1,11 +1,11 @@
-import React from 'react';
-import {HomeSquare} from "../icons";
-import style from './HomeButton.module.scss';
+import React from "react";
+import { HomeSquare } from "../icons";
+import style from "./HomeButton.module.scss";
 
-export const HomeButton = () => {
+export const HomeButton = (props) => {
   return (
-    <div className={style.homeButton}>
+    <div className={style.homeButton} onClick={props.onClick}>
       <HomeSquare />
     </div>
   );
-}
+};
