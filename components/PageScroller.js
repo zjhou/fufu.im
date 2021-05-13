@@ -1,19 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-// import { debounce } from "lodash";
 import { animated, config, useSpring } from "react-spring";
-import { useWindowScrollDirection } from "./UseScrollDirection";
-
-// const useDebounced = (fn) => {
-//   return useCallback(debounce(fn, 300, { leading: true, trailing: false }), []);
-// };
-
-// const usePrevious = (value) => {
-//   const ref = useRef();
-//   useEffect(() => {
-//     ref.current = value;
-//   });
-//   return ref.current;
-// };
+import { useWheel } from "react-use-gesture";
+import { Lethargy } from "lethargy";
+const lethargy = new Lethargy();
 
 const usePageTransformStyle = (pageIndex, pageHeight) => {
   return useSpring({
@@ -22,39 +11,34 @@ const usePageTransformStyle = (pageIndex, pageHeight) => {
   });
 };
 
-const getNextPageIdx = (current, delta, pagesCount) => {
-  const draft = current + delta;
-  if (draft < 0) {
-    return 0;
-  }
-  if (draft >= pagesCount - 1) {
-    return pagesCount - 1;
-  }
-  return draft;
-};
+const clamp = (value, min, max) => Math.max(Math.min(max, value), min);
 
 export const PageScroller = (props) => {
   const { children, className, pagesCount, resetTime } = props;
-  const [, refresh] = useState(Date.now());
-  const idxRef = useRef(0);
+  const [index, setIndex] = useState(0);
 
-  useWindowScrollDirection({
-    useNumberDirection: true,
-    afterCalc: (d) => {
-      idxRef.current = getNextPageIdx(idxRef.current, d, pagesCount);
-      refresh(Date.now());
-    },
+  const bind = useWheel(({ event, last, memo: wait = false }) => {
+    if (!last) {
+      const s = lethargy.check(event);
+      if (s) {
+        if (!wait) {
+          setIndex((i) => clamp(i - s, 0, pagesCount - 1));
+          return true;
+        }
+      } else return false;
+    } else {
+      return false;
+    }
   });
 
-  const styles = usePageTransformStyle(idxRef.current, 614);
+  const styles = usePageTransformStyle(index, 614);
 
   useEffect(() => {
-    idxRef.current = 0;
-    refresh(Date.now());
+    setIndex(0);
   }, [resetTime]);
 
   return (
-    <div className={className} style={styles}>
+    <div className={className} style={styles} {...bind()}>
       <animated.div style={styles}>{children}</animated.div>
     </div>
   );
