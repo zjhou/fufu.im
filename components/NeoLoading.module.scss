@@ -1,0 +1,83 @@
+$yellow: #ffe6aa;
+$red: #ffbaad;
+$cyan: #c9f6fd;
+$animation-rate: 0.8s;
+
+@keyframes neo-light-yellow {
+  0% {
+    background: $yellow;
+  }
+
+  33.33% {
+    background: $red;
+  }
+
+  66.66% {
+    background: $cyan;
+  }
+}
+@keyframes neo-light-red {
+  0% {
+    background: $red;
+  }
+
+  33.33% {
+    background: $cyan;
+  }
+
+  66.66% {
+    background: $yellow;
+  }
+}
+
+@keyframes neo-light-cyan {
+  0% {
+    background: $cyan;
+  }
+
+  33.33% {
+    background: $yellow;
+  }
+
+  66.66% {
+    background: $red;
+  }
+}
+
+.neoLoading {
+  width: 170px;
+  display: flex;
+  justify-content: space-between;
+
+  .neoLight {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    animation-duration: 3 * $animation-rate;
+    animation-iteration-count: infinite;
+    &:nth-child(1) {
+      background: $yellow;
+      animation-name: neo-light-yellow;
+    }
+    &:nth-child(2) {
+      background: $red;
+      animation-name: neo-light-red;
+    }
+    &:nth-child(3) {
+      background: $cyan;
+      animation-name: neo-light-cyan;
+    }
+    &:nth-child(4) {
+      background: $yellow;
+      animation-name: neo-light-yellow;
+    }
+    &:nth-child(5) {
+      background: $red;
+      animation-name: neo-light-red;
+    }
+    &:nth-child(6) {
+      background: $cyan;
+      animation-name: neo-light-cyan;
+    }
+  }
+}

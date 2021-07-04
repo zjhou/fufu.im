@@ -1,0 +1,33 @@
+{
+  "name": "learn-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "dependencies": {
+    "antd": "^4.15.3",
+    "lethargy": "^1.0.9",
+    "lodash": "^4.17.21",
+    "next": "^10.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-spring": "^9.1.2",
+    "react-use-gesture": "^9.1.3",
+    "rxjs": "^7.0.0",
+    "sass": "^1.29.0"
+  },
+  "devDependencies": {
+    "babel-plugin-inline-react-svg": "^2.0.1",
+    "husky": "^6.0.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
+  }
+}

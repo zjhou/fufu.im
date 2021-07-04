@@ -1,0 +1,10 @@
+.articles {
+  height: 604px;
+  padding: 30px 0;
+  min-width: 1150px;
+  overflow: hidden;
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+}
